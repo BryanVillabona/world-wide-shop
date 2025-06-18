@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>FakeStore App</title>
+  <title>World Wide Shop</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- Íconos Phosphor -->
 </head>
@@ -71,6 +71,35 @@
   </nav>
 </header>
 
+<!-- BANNER / CARRUSEL -->
+<section class="relative w-full max-w-7xl mx-auto mt-4 overflow-hidden rounded-lg shadow-md">
+  <!-- Contenedor de imágenes -->
+  <div id="carousel" class="relative w-full h-64 sm:h-80 md:h-96">
+    <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-100">
+      <img src="https://picsum.photos/id/1015/1200/400" class="w-full h-full object-cover" alt="Banner 1">
+    </div>
+    <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-0">
+      <img src="https://picsum.photos/id/1018/1200/400" class="w-full h-full object-cover" alt="Banner 2">
+    </div>
+    <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-0">
+      <img src="https://picsum.photos/id/1020/1200/400" class="w-full h-full object-cover" alt="Banner 3">
+    </div>
+    <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-0">
+      <img src="https://picsum.photos/id/1024/1200/400" class="w-full h-full object-cover" alt="Banner 4">
+    </div>
+  </div>
 
+  <!-- Botones navegación -->
+  <button id="prevBtn" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80">
+    <i class="ph ph-caret-left text-2xl"></i>
+  </button>
+  <button id="nextBtn" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80">
+    <i class="ph ph-caret-right text-2xl"></i>
+  </button>
+</section>
+
+
+
+<script src="./js/main.js"></script>
 </body>
 </html>
