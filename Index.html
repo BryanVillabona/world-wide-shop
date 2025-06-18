@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FakeStore App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- Íconos Phosphor -->
+</head>
+<body class="bg-gray-300">
+
+<header class="sticky top-0 z-50 bg-black text-white shadow-md">
+  <div class="px-4 py-2 max-w-7xl mx-auto flex items-center justify-between gap-4 bg-black">
+    
+    <div class="flex items-center gap-2">
+      <div class="w-24 h-8 bg-white rounded-sm flex items-center justify-center text-gray-900 font-bold text-sm">
+        LOGO
+      </div>
+    </div>
+
+    <div class="flex-1 max-w-2xl flex items-center">
+      <input
+        type="text"
+        placeholder="Buscar productos..."
+        class="w-full px-4 py-2 rounded-l-md text-black focus:outline-none"
+      />
+      <button class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-r-md">
+        <i class="ph ph-magnifying-glass text-lg"></i>
+      </button>
+    </div>
+
+    <div class="flex items-center gap-6">
+      <a href="#" class="flex items-center gap-1 hover:text-yellow-400">
+        <i class="ph ph-user-circle text-xl"></i>
+        <span class="text-sm hidden sm:inline">Cuenta</span>
+      </a>
+      <a href="#" class="flex items-center gap-1 hover:text-yellow-400">
+        <i class="ph ph-user-plus text-xl"></i>
+        <span class="text-sm hidden sm:inline">Registro</span>
+      </a>
+      <a href="#" class="flex items-center gap-1 hover:text-yellow-400 relative">
+        <i class="ph ph-shopping-cart text-xl"></i>
+        <span class="text-sm hidden sm:inline">Carrito</span>
+        <span class="absolute -top-1 -right-2 bg-yellow-400 text-black text-xs font-bold rounded-full px-1">0</span>
+      </a>
+    </div>
+  </div>
+
+  <nav class="bg-gray-800 text-sm relative z-40">
+    <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center gap-4">
+      <a href="#" class="hover:text-yellow-400">Inicio</a>
+      <a href="#" class="hover:text-yellow-400">Electrónica</a>
+
+      <div class="relative group">
+        <button class="hover:text-yellow-400 flex items-center gap-1 focus:outline-none">
+          Ropa
+          <i class="ph ph-caret-down"></i>
+        </button>
+        <div class="absolute left-0 mt-2 w-40 bg-white text-black rounded-md shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition-all duration-200 invisible group-hover:visible z-50">
+          <a href="#" class="block px-4 py-2 hover:bg-gray-200">Ropa Hombre</a>
+          <a href="#" class="block px-4 py-2 hover:bg-gray-200">Ropa Mujer</a>
+        </div>
+      </div>
+
+      <a href="#" class="hover:text-yellow-400">Joyería</a>
+      <a href="#" class="hover:text-yellow-400">Ofertas</a>
+      <a href="#" class="hover:text-yellow-400">Destacados</a>
+      <a href="#" class="hover:text-yellow-400">Mis Pedidos</a>
+      <a href="#" class="hover:text-yellow-400">Ayuda</a>
+    </div>
+  </nav>
+</header>
+
+
+</body>
+</html>
