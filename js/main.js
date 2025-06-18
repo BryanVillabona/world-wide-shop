@@ -1,42 +1,40 @@
-<script>
-  const items = document.querySelectorAll('.carousel-item');
-  const prev = document.getElementById('prevBtn');
-  const next = document.getElementById('nextBtn');
-  let current = 0;
-  let interval;
+const items = document.querySelectorAll('.carousel-item');
+const prev = document.getElementById('prevBtn');
+const next = document.getElementById('nextBtn');
+let current = 0;
+let interval;
 
-  function showSlide(index) {
+function showSlide(index) {
     items.forEach((item, i) => {
-      item.classList.toggle('opacity-100', i === index);
-      item.classList.toggle('opacity-0', i !== index);
+        item.classList.toggle('opacity-100', i === index);
+        item.classList.toggle('opacity-0', i !== index);
     });
-  }
+}
 
-  function nextSlide() {
+function nextSlide() {
     current = (current + 1) % items.length;
     showSlide(current);
-  }
+}
 
-  function prevSlide() {
+function prevSlide() {
     current = (current - 1 + items.length) % items.length;
     showSlide(current);
-  }
+}
 
-  next.addEventListener('click', () => {
+next.addEventListener('click', () => {
     nextSlide();
     resetInterval();
-  });
+});
 
-  prev.addEventListener('click', () => {
+prev.addEventListener('click', () => {
     prevSlide();
     resetInterval();
-  });
+});
 
-  function resetInterval() {
+function resetInterval() {
     clearInterval(interval);
     interval = setInterval(nextSlide, 5000);
-  }
+}
 
-  // Iniciar carrusel automático
-  interval = setInterval(nextSlide, 5000);
-</script>
+// Iniciar carrusel automático
+interval = setInterval(nextSlide, 5000);
