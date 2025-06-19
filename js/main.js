@@ -39,7 +39,7 @@ function resetInterval() {
 // Iniciar carrusel automático
 interval = setInterval(nextSlide, 5000);
 
-const contenedor = document.getElementById('lista-productos');
+// const contenedor = document.getElementById('lista-productos');
 
 // Cargar productos de la API
 async function cargarProductos() {
@@ -150,16 +150,16 @@ document.addEventListener('DOMContentLoaded', cargarCarritoDesdeStorage);
 
 const contenedor = document.getElementById('lista-productos');
 
-  async function cargarProductos() {
+async function cargarProductos() {
     try {
-      const res = await fetch('https://fakestoreapi.com/products');
-      const productos = await res.json();
+        const res = await fetch('https://fakestoreapi.com/products');
+        const productos = await res.json();
 
-      productos.forEach(producto => {
-        const tarjeta = document.createElement('div');
-        tarjeta.className = 'bg-white rounded-lg shadow-md p-4 flex flex-col hover:shadow-lg transition';
+        productos.forEach(producto => {
+            const tarjeta = document.createElement('div');
+            tarjeta.className = 'bg-white rounded-lg shadow-md p-4 flex flex-col hover:shadow-lg transition';
 
-        tarjeta.innerHTML = `
+            tarjeta.innerHTML = `
           <img src="${producto.image}" alt="${producto.title}" class="h-40 w-full object-contain mb-4">
           <h3 class="text-sm font-semibold mb-1 line-clamp-2">${producto.title}</h3>
           <p class="text-lg font-bold text-gray-800 mb-2">💲${producto.price.toFixed(2)}</p>
@@ -172,40 +172,40 @@ const contenedor = document.getElementById('lista-productos');
           </button>
         `;
 
-        contenedor.appendChild(tarjeta);
-      });
+            contenedor.appendChild(tarjeta);
+        });
 
-      // Activar botones
-      activarBotonesCarrito(productos);
+        // Activar botones
+        activarBotonesCarrito(productos);
     } catch (error) {
-      contenedor.innerHTML = `<p class="text-red-500">Error al cargar los productos.</p>`;
+        contenedor.innerHTML = `<p class="text-red-500">Error al cargar los productos.</p>`;
     }
-  }
+}
 
-  function activarBotonesCarrito(productos) {
+function activarBotonesCarrito(productos) {
     const botones = document.querySelectorAll('.btn-carrito');
     botones.forEach(boton => {
-      boton.addEventListener('click', () => {
-        const id = parseInt(boton.getAttribute('data-id'));
-        const producto = productos.find(p => p.id === id);
+        boton.addEventListener('click', () => {
+            const id = parseInt(boton.getAttribute('data-id'));
+            const producto = productos.find(p => p.id === id);
 
-        const existente = carrito.find(p => p.id === id);
-        if (existente) {
-          existente.cantidad += 1;
-        } else {
-          carrito.push({
-            id: producto.id,
-            title: producto.title,
-            price: producto.price,
-            image: producto.image,
-            cantidad: 1
-          });
-        }
+            const existente = carrito.find(p => p.id === id);
+            if (existente) {
+                existente.cantidad += 1;
+            } else {
+                carrito.push({
+                    id: producto.id,
+                    title: producto.title,
+                    price: producto.price,
+                    image: producto.image,
+                    cantidad: 1
+                });
+            }
 
-        guardarCarritoEnStorage();
-        renderizarCarrito();
-      });
+            guardarCarritoEnStorage();
+            renderizarCarrito();
+        });
     });
-  }
+}
 
-  cargarProductos();
+cargarProductos();
