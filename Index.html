@@ -106,7 +106,28 @@
   </div>
 </section>
 
+<!-- CARRITO LATERAL -->
+<aside id="carrito" class="fixed right-0 top-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50 flex flex-col">
+  <!-- Encabezado -->
+  <div class="flex items-center justify-between p-4 border-b">
+    <h2 class="text-lg font-semibold">🛒 Mi Carrito</h2>
+    <button id="cerrarCarrito" class="text-gray-500 hover:text-red-600 text-2xl leading-none">&times;</button>
+  </div>
 
+  <!-- Lista de productos -->
+  <div id="items-carrito" class="flex-1 overflow-y-auto p-4 space-y-4">
+    <!-- Productos se insertan aquí vía JS -->
+  </div>
+
+  <!-- Total y acciones -->
+  <div class="border-t p-4">
+    <p class="text-lg font-bold mb-2">Total: <span id="total-carrito">COP 0.00</span></p>
+    <button class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-md font-semibold">
+      Finalizar Compra
+    </button>
+  </div>
+</aside>
+@BryanVillabona
 
 
 <script src="./js/main.js"></script>
