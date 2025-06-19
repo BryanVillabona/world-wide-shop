@@ -85,3 +85,65 @@ carritoBoton?.addEventListener('click', (e) => {
     e.preventDefault();
     carritoPanel.classList.remove('translate-x-full');
 });
+
+let carrito = [];
+
+// Leer carrito desde localStorage
+function cargarCarritoDesdeStorage() {
+    const data = localStorage.getItem('carrito');
+    if (data) {
+        carrito = JSON.parse(data);
+        renderizarCarrito();
+    }
+}
+
+// Guardar carrito en localStorage
+function guardarCarritoEnStorage() {
+    localStorage.setItem('carrito', JSON.stringify(carrito));
+}
+
+// Calcular total del carrito
+function calcularTotal() {
+    return carrito.reduce((total, prod) => total + prod.price * prod.cantidad, 0).toFixed(2);
+}
+
+// Renderizar carrito en la barra lateral
+function renderizarCarrito() {
+    const contenedor = document.getElementById('items-carrito');
+    const totalTexto = document.getElementById('total-carrito');
+    contenedor.innerHTML = '';
+
+    if (carrito.length === 0) {
+        contenedor.innerHTML = '<p class="text-gray-500">Tu carrito está vacío.</p>';
+        totalTexto.textContent = 'COP 0.00';
+        return;
+    }
+
+    carrito.forEach(prod => {
+        const div = document.createElement('div');
+        div.className = 'flex items-center gap-4';
+
+        div.innerHTML = `
+        <img src="${prod.image}" alt="${prod.title}" class="w-12 h-12 object-contain">
+        <div class="flex-1">
+          <h4 class="text-sm font-medium line-clamp-1">${prod.title}</h4>
+          <p class="text-xs text-gray-600">Cant: ${prod.cantidad} | 💲${(prod.price * prod.cantidad).toFixed(2)}</p>
+        </div>
+        <button class="text-red-600 hover:text-red-800 font-bold" onclick="eliminarDelCarrito(${prod.id})">×</button>
+      `;
+
+        contenedor.appendChild(div);
+    });
+
+    totalTexto.textContent = `COP ${calcularTotal()}`;
+}
+
+// Eliminar producto del carrito
+function eliminarDelCarrito(id) {
+    carrito = carrito.filter(prod => prod.id !== id);
+    guardarCarritoEnStorage();
+    renderizarCarrito();
+}
+
+// Iniciar al cargar
+document.addEventListener('DOMContentLoaded', cargarCarritoDesdeStorage);
