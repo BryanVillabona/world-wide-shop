@@ -72,3 +72,16 @@ async function cargarProductos() {
 }
 
 cargarProductos();
+
+const carritoPanel = document.getElementById('carrito');
+const cerrarCarrito = document.getElementById('cerrarCarrito');
+const carritoBoton = document.querySelector('a[href="#"] i.ph-shopping-cart')?.closest('a');
+
+cerrarCarrito.addEventListener('click', () => {
+    carritoPanel.classList.add('translate-x-full');
+});
+
+carritoBoton?.addEventListener('click', (e) => {
+    e.preventDefault();
+    carritoPanel.classList.remove('translate-x-full');
+});
