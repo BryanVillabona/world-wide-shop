@@ -61,6 +61,9 @@ function cargarCarritoDesdeStorage() {
     if (data) {
         carrito = JSON.parse(data);
         renderizarCarrito();
+    } else {
+        // Si no hay carrito guardado, asegurar que el contador esté en 0
+        actualizarContadorCarrito();
     }
 }
 
@@ -74,6 +77,16 @@ function calcularTotal() {
     return carrito.reduce((total, prod) => total + prod.price * prod.cantidad, 0).toFixed(2);
 }
 
+// Actualizar contador del carrito en el header
+function actualizarContadorCarrito() {
+    const contador = document.querySelector('.absolute.-top-1.-right-2');
+    const totalItems = carrito.reduce((total, prod) => total + prod.cantidad, 0);
+    
+    if (contador) {
+        contador.textContent = totalItems;
+    }
+}
+
 // Renderizar carrito en la barra lateral
 function renderizarCarrito() {
     const contenedor = document.getElementById('items-carrito');
@@ -83,6 +96,7 @@ function renderizarCarrito() {
     if (carrito.length === 0) {
         contenedor.innerHTML = '<p class="text-gray-500">Tu carrito está vacío.</p>';
         totalTexto.textContent = 'COP 0.00';
+        actualizarContadorCarrito();
         return;
     }
 
@@ -103,6 +117,7 @@ function renderizarCarrito() {
     });
 
     totalTexto.textContent = `COP ${calcularTotal()}`;
+    actualizarContadorCarrito();
 }
 
 // Eliminar producto del carrito
