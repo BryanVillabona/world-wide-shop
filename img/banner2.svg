@@ -1,0 +1,211 @@
+<svg width="1200" height="500" xmlns="http://www.w3.org/2000/svg">
+  <!-- Definiciones de gradientes y efectos -->
+  <defs>
+    <!-- Gradiente principal rojo-naranja -->
+    <linearGradient id="mainGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#dc2626;stop-opacity:1" />
+      <stop offset="30%" style="stop-color:#ea580c;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#eab308;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Gradiente dorado para elementos premium -->
+    <linearGradient id="goldGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#f59e0b;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#d97706;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Gradiente para ofertas -->
+    <radialGradient id="offerGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#fef3c7;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </radialGradient>
+    
+    <!-- Efectos de sombra -->
+    <filter id="dropShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="3" dy="5" stdDeviation="6" flood-color="rgba(0,0,0,0.4)"/>
+    </filter>
+    
+    <filter id="textShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="2" dy="3" stdDeviation="3" flood-color="rgba(0,0,0,0.5)"/>
+    </filter>
+    
+    <!-- Patrón de puntos para textura -->
+    <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="1.5" fill="rgba(255,255,255,0.1)"/>
+    </pattern>
+  </defs>
+  
+  <!-- Fondo principal -->
+  <rect width="1200" height="500" fill="url(#mainGradient)"/>
+  
+  <!-- Textura de puntos -->
+  <rect width="1200" height="500" fill="url(#dots)" opacity="0.3"/>
+  
+  <!-- Formas decorativas dinámicas -->
+  <circle cx="100" cy="100" r="80" fill="rgba(255,255,255,0.08)" opacity="0.6"/>
+  <circle cx="1100" cy="80" r="60" fill="rgba(255,255,255,0.06)" opacity="0.8"/>
+  <rect x="50" y="350" width="100" height="100" rx="20" fill="rgba(255,255,255,0.05)" opacity="0.7" transform="rotate(15 100 400)"/>
+  <rect x="1050" y="320" width="80" height="80" rx="40" fill="rgba(255,255,255,0.07)" opacity="0.9" transform="rotate(-20 1090 360)"/>
+  
+  <!-- Badge de "OFERTA ESPECIAL" en la esquina -->
+  <g transform="translate(80, 50)">
+    <rect x="-40" y="-15" width="180" height="30" rx="15" fill="#dc2626" filter="url(#dropShadow)"/>
+    <text x="50" y="3" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="14" font-weight="900" fill="white">🔥 OFERTA ESPECIAL</text>
+  </g>
+  
+  <!-- Título principal llamativo -->
+  <text x="600" y="120" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="52" font-weight="900" fill="white" filter="url(#textShadow)">¡MEGA DESCUENTOS!</text>
+  
+  <!-- Subtítulo urgencia -->
+  <text x="600" y="155" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="600" fill="#fef3c7">HASTA 70% OFF - TIEMPO LIMITADO</text>
+  
+  <!-- Contador de tiempo simulado -->
+  <g transform="translate(600, 185)">
+    <rect x="-120" y="-5" width="240" height="25" rx="12" fill="rgba(0,0,0,0.3)"/>
+    <text x="0" y="8" text-anchor="middle" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#fbbf24">⏰ Quedan: 2 días 15:23:45</text>
+  </g>
+  
+  <!-- Grid de ofertas por categoría -->
+  <g transform="translate(0, 240)">
+    
+    <!-- Oferta 1: Ropa de Hombre -->
+    <g transform="translate(150, 0)">
+      <rect x="-120" y="-40" width="240" height="160" rx="20" fill="rgba(255,255,255,0.95)" filter="url(#dropShadow)"/>
+      <!-- Etiqueta de descuento -->
+      <circle cx="80" cy="-20" r="25" fill="#dc2626"/>
+      <text x="80" y="-15" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="14" font-weight="900" fill="white">50%</text>
+      <text x="80" y="-3" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="600" fill="white">OFF</text>
+      
+      <!-- Icono de traje mejorado -->
+      <g transform="translate(0, -10)">
+        <rect x="-30" y="10" width="60" height="70" rx="10" fill="#1f2937" stroke="#374151" stroke-width="2"/>
+        <rect x="-20" y="20" width="40" height="50" rx="5" fill="#4b5563" stroke="#6b7280" stroke-width="1"/>
+        <line x1="-15" y1="30" x2="15" y2="30" stroke="#d1d5db" stroke-width="2"/>
+        <circle cx="-10" cy="40" r="3" fill="#fbbf24"/>
+        <circle cx="10" cy="40" r="3" fill="#fbbf24"/>
+        <rect x="-5" y="25" width="10" height="15" rx="2" fill="#dc2626"/>
+      </g>
+      
+      <text x="0" y="90" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="16" font-weight="900" fill="#dc2626">ROPA HOMBRE</text>
+      <text x="0" y="108" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#374151">Camisas, Pantalones, Trajes</text>
+    </g>
+    
+    <!-- Oferta 2: Ropa de Mujer -->
+    <g transform="translate(450, 0)">
+      <rect x="-120" y="-40" width="240" height="160" rx="20" fill="rgba(255,255,255,0.95)" filter="url(#dropShadow)"/>
+      <!-- Etiqueta de descuento -->
+      <circle cx="80" cy="-20" r="25" fill="#dc2626"/>
+      <text x="80" y="-15" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="14" font-weight="900" fill="white">60%</text>
+      <text x="80" y="-3" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="600" fill="white">OFF</text>
+      
+      <!-- Icono de vestido mejorado -->
+      <g transform="translate(0, -10)">
+        <path d="M -20 15 Q -20 8 -12 8 L 12 8 Q 20 8 20 15 L 16 55 Q 16 62 10 62 L -10 62 Q -16 62 -16 55 Z" fill="#ec4899" stroke="#be185d" stroke-width="2"/>
+        <path d="M -12 20 Q 0 12 12 20 L 12 55 L -12 55 Z" fill="#f9a8d4" stroke="#ec4899" stroke-width="1"/>
+        <circle cx="-6" cy="25" r="2" fill="#fbbf24"/>
+        <circle cx="0" cy="30" r="2" fill="#fbbf24"/>
+        <circle cx="6" cy="25" r="2" fill="#fbbf24"/>
+        <line x1="-8" y1="65" x2="-8" y2="78" stroke="#be185d" stroke-width="3"/>
+        <line x1="8" y1="65" x2="8" y2="78" stroke="#be185d" stroke-width="3"/>
+      </g>
+      
+      <text x="0" y="90" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="16" font-weight="900" fill="#dc2626">ROPA MUJER</text>
+      <text x="0" y="108" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#374151">Vestidos, Blusas, Faldas</text>
+    </g>
+    
+    <!-- Oferta 3: Joyas -->
+    <g transform="translate(750, 0)">
+      <rect x="-120" y="-40" width="240" height="160" rx="20" fill="rgba(255,255,255,0.95)" filter="url(#dropShadow)"/>
+      <!-- Etiqueta de descuento -->
+      <circle cx="80" cy="-20" r="25" fill="#dc2626"/>
+      <text x="80" y="-15" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="14" font-weight="900" fill="white">70%</text>
+      <text x="80" y="-3" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="600" fill="white">OFF</text>
+      
+      <!-- Icono de joyas mejorado -->
+      <g transform="translate(0, -10)">
+        <!-- Diamante -->
+        <path d="M 0 12 L -15 30 L -10 58 L 10 58 L 15 30 Z" fill="url(#goldGradient)" stroke="#d97706" stroke-width="2"/>
+        <line x1="-15" y1="30" x2="15" y2="30" stroke="#d97706" stroke-width="2"/>
+        <line x1="-5" y1="12" x2="-5" y2="58" stroke="#d97706" stroke-width="1" opacity="0.7"/>
+        <line x1="5" y1="12" x2="5" y2="58" stroke="#d97706" stroke-width="1" opacity="0.7"/>
+        <line x1="0" y1="12" x2="0" y2="58" stroke="#d97706" stroke-width="1" opacity="0.7"/>
+        
+        <!-- Collar -->
+        <path d="M -25 65 Q 0 72 25 65" fill="none" stroke="#fbbf24" stroke-width="3"/>
+        <circle cx="0" cy="75" r="5" fill="url(#goldGradient)" stroke="#d97706" stroke-width="2"/>
+        
+        <!-- Anillo -->
+        <circle cx="-30" cy="45" r="8" fill="none" stroke="#fbbf24" stroke-width="3"/>
+        <circle cx="-30" cy="40" r="3" fill="#dc2626"/>
+        
+        <!-- Aretes -->
+        <circle cx="25" cy="35" r="4" fill="url(#goldGradient)" stroke="#d97706" stroke-width="1"/>
+        <circle cx="35" cy="35" r="4" fill="url(#goldGradient)" stroke="#d97706" stroke-width="1"/>
+      </g>
+      
+      <text x="0" y="90" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="16" font-weight="900" fill="#dc2626">JOYAS</text>
+      <text x="0" y="108" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#374151">Anillos, Collares, Aretes</text>
+    </g>
+    
+    <!-- Oferta 4: Tecnología -->
+    <g transform="translate(1050, 0)">
+      <rect x="-120" y="-40" width="240" height="160" rx="20" fill="rgba(255,255,255,0.95)" filter="url(#dropShadow)"/>
+      <!-- Etiqueta de descuento -->
+      <circle cx="80" cy="-20" r="25" fill="#dc2626"/>
+      <text x="80" y="-15" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="14" font-weight="900" fill="white">40%</text>
+      <text x="80" y="-3" text-anchor="middle" font-family="Arial, sans-serif" font-size="10" font-weight="600" fill="white">OFF</text>
+      
+      <!-- Iconos de tecnología mejorados -->
+      <g transform="translate(0, -10)">
+        <!-- Smartphone -->
+        <rect x="-15" y="15" width="30" height="50" rx="6" fill="#1f2937" stroke="#374151" stroke-width="2"/>
+        <rect x="-10" y="22" width="20" height="30" fill="#3b82f6"/>
+        <circle cx="0" cy="58" r="3" fill="#6b7280"/>
+        <rect x="-8" y="24" width="16" height="2" fill="#60a5fa"/>
+        <rect x="-6" y="28" width="12" height="1" fill="#93c5fd"/>
+        <rect x="-4" y="31" width="8" height="1" fill="#93c5fd"/>
+        
+        <!-- Laptop -->
+        <rect x="-25" y="45" width="50" height="30" rx="3" fill="#374151" stroke="#4b5563" stroke-width="1"/>
+        <rect x="-22" y="48" width="44" height="20" fill="#1e293b"/>
+        <rect x="-18" y="52" width="36" height="12" fill="#3b82f6"/>
+        
+        <!-- Auriculares -->
+        <path d="M -35 25 Q -35 12 -25 12 Q -15 12 -15 25 L -15 38" fill="none" stroke="#6b7280" stroke-width="3"/>
+        <path d="M 35 25 Q 35 12 25 12 Q 15 12 15 25 L 15 38" fill="none" stroke="#6b7280" stroke-width="3"/>
+        <path d="M -25 12 Q 0 5 25 12" fill="none" stroke="#6b7280" stroke-width="3"/>
+        <circle cx="-15" cy="35" r="4" fill="#dc2626"/>
+        <circle cx="15" cy="35" r="4" fill="#dc2626"/>
+      </g>
+      
+      <text x="0" y="90" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="16" font-weight="900" fill="#dc2626">TECNOLOGÍA</text>
+      <text x="0" y="108" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" fill="#374151">Celulares, Laptops, Audio</text>
+    </g>
+    
+  </g>
+  
+  <!-- Botón de llamada a la acción principal -->
+  <g transform="translate(600, 450)">
+    <rect x="-150" y="-25" width="300" height="50" rx="25" fill="url(#goldGradient)" filter="url(#dropShadow)"/>
+    <rect x="-150" y="-25" width="300" height="50" rx="25" fill="rgba(255,255,255,0.1)" opacity="0.5"/>
+    <text x="0" y="-5" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="18" font-weight="900" fill="white">🛒 COMPRAR AHORA</text>
+    <text x="0" y="10" text-anchor="middle" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="rgba(255,255,255,0.9)">¡Envío GRATIS en compras sobre $50!</text>
+  </g>
+  
+  <!-- Elementos decorativos de urgencia -->
+  <g transform="translate(1050, 150)">
+    <rect x="-60" y="-20" width="120" height="40" rx="20" fill="rgba(220,38,38,0.9)" filter="url(#dropShadow)"/>
+    <text x="0" y="-5" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="12" font-weight="900" fill="white">⚡ ÚLTIMAS</text>
+    <text x="0" y="8" text-anchor="middle" font-family="Arial Black, sans-serif" font-size="12" font-weight="900" fill="white">HORAS</text>
+  </g>
+  
+  <!-- Garantía -->
+  <g transform="translate(150, 150)">
+    <rect x="-70" y="-15" width="140" height="30" rx="15" fill="rgba(34,197,94,0.9)" filter="url(#dropShadow)"/>
+    <text x="0" y="-2" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="white">✓ Garantía 30 días</text>
+    <text x="0" y="10" text-anchor="middle" font-family="Arial, sans-serif" font-size="11" font-weight="700" fill="white">Devolución GRATIS</text>
+  </g>
+  
+</svg>

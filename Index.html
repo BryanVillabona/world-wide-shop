@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,128 +8,130 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- Íconos Phosphor -->
 </head>
+
 <body class="bg-gray-300">
 
-<header class="sticky top-0 z-50 bg-black text-white shadow-md">
-  <div class="px-4 py-2 max-w-7xl mx-auto flex items-center justify-between gap-4 bg-black">
-    
-    <div class="flex items-center gap-2">
-      <div class="w-24 h-8 bg-white rounded-sm flex items-center justify-center text-gray-900 font-bold text-sm">
-        LOGO
-      </div>
-    </div>
+  <header class="sticky top-0 z-50 bg-black text-white shadow-md">
+    <div class="px-4 py-2 max-w-7xl mx-auto flex items-center justify-between gap-4 bg-black">
 
-    <div class="flex-1 max-w-2xl flex items-center">
-      <input
-        type="text"
-        placeholder="Buscar productos..."
-        class="w-full px-4 py-2 rounded-l-md text-black focus:outline-none"
-      />
-      <button class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-r-md">
-        <i class="ph ph-magnifying-glass text-lg"></i>
-      </button>
-    </div>
-
-    <div class="flex items-center gap-6">
-      <a href="#" class="flex items-center gap-1 hover:text-yellow-400">
-        <i class="ph ph-user-circle text-xl"></i>
-        <span class="text-sm hidden sm:inline">Cuenta</span>
-      </a>
-      <a href="#" class="flex items-center gap-1 hover:text-yellow-400">
-        <i class="ph ph-user-plus text-xl"></i>
-        <span class="text-sm hidden sm:inline">Registro</span>
-      </a>
-      <a href="#" class="flex items-center gap-1 hover:text-yellow-400 relative">
-        <i class="ph ph-shopping-cart text-xl"></i>
-        <span class="text-sm hidden sm:inline">Carrito</span>
-        <span class="absolute -top-1 -right-2 bg-yellow-400 text-black text-xs font-bold rounded-full px-1">0</span>
-      </a>
-    </div>
-  </div>
-
-  <nav class="bg-gray-800 text-sm relative z-40">
-    <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center gap-4">
-      <a href="#" class="hover:text-yellow-400">Inicio</a>
-      <a href="#" class="hover:text-yellow-400">Electrónica</a>
-
-      <div class="relative group">
-        <button class="hover:text-yellow-400 flex items-center gap-1 focus:outline-none">
-          Ropa
-          <i class="ph ph-caret-down"></i>
-        </button>
-        <div class="absolute left-0 mt-2 w-40 bg-white text-black rounded-md shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition-all duration-200 invisible group-hover:visible z-50">
-          <a href="#" class="block px-4 py-2 hover:bg-gray-200">Ropa Hombre</a>
-          <a href="#" class="block px-4 py-2 hover:bg-gray-200">Ropa Mujer</a>
+      <div class="flex items-center gap-2">
+        <div class="w-24 h-8 bg-white rounded-sm flex items-center justify-center text-gray-900 font-bold text-sm">
+          LOGO
         </div>
       </div>
 
-      <a href="#" class="hover:text-yellow-400">Joyería</a>
-      <a href="#" class="hover:text-yellow-400">Ofertas</a>
-      <a href="#" class="hover:text-yellow-400">Destacados</a>
-      <a href="#" class="hover:text-yellow-400">Mis Pedidos</a>
-      <a href="#" class="hover:text-yellow-400">Ayuda</a>
+      <div class="flex-1 max-w-2xl flex items-center">
+        <input type="text" placeholder="Buscar productos..."
+          class="w-full px-4 py-2 rounded-l-md text-black focus:outline-none" />
+        <button class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-r-md">
+          <i class="ph ph-magnifying-glass text-lg"></i>
+        </button>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <a href="#" class="flex items-center gap-1 hover:text-yellow-400">
+          <i class="ph ph-user-circle text-xl"></i>
+          <span class="text-sm hidden sm:inline">Cuenta</span>
+        </a>
+        <a href="#" class="flex items-center gap-1 hover:text-yellow-400">
+          <i class="ph ph-user-plus text-xl"></i>
+          <span class="text-sm hidden sm:inline">Registro</span>
+        </a>
+        <a href="#" class="flex items-center gap-1 hover:text-yellow-400 relative">
+          <i class="ph ph-shopping-cart text-xl"></i>
+          <span class="text-sm hidden sm:inline">Carrito</span>
+          <span class="absolute -top-1 -right-2 bg-yellow-400 text-black text-xs font-bold rounded-full px-1">0</span>
+        </a>
+      </div>
     </div>
-  </nav>
-</header>
 
-<!-- BANNER / CARRUSEL -->
-<section class="relative w-full max-w-7xl mx-auto mt-4 overflow-hidden rounded-lg shadow-md">
-  <!-- Contenedor de imágenes -->
-  <div id="carousel" class="relative w-full h-64 sm:h-80 md:h-96">
-    <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-100">
-      <img src="https://picsum.photos/id/1015/1200/400" class="w-full h-full object-cover" alt="Banner 1">
+    <nav class="bg-gray-800 text-sm relative z-40">
+      <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center gap-4">
+        <a href="#" class="hover:text-yellow-400">Inicio</a>
+        <a href="#" class="hover:text-yellow-400">Electrónica</a>
+
+        <div class="relative group">
+          <button class="hover:text-yellow-400 flex items-center gap-1 focus:outline-none">
+            Ropa
+            <i class="ph ph-caret-down"></i>
+          </button>
+          <div
+            class="absolute left-0 mt-2 w-40 bg-white text-black rounded-md shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition-all duration-200 invisible group-hover:visible z-50">
+            <a href="#" class="block px-4 py-2 hover:bg-gray-200">Ropa Hombre</a>
+            <a href="#" class="block px-4 py-2 hover:bg-gray-200">Ropa Mujer</a>
+          </div>
+        </div>
+
+        <a href="#" class="hover:text-yellow-400">Joyería</a>
+        <a href="#" class="hover:text-yellow-400">Ofertas</a>
+        <a href="#" class="hover:text-yellow-400">Destacados</a>
+        <a href="#" class="hover:text-yellow-400">Mis Pedidos</a>
+        <a href="#" class="hover:text-yellow-400">Ayuda</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- BANNER / CARRUSEL -->
+  <section class="relative w-full max-w-7xl mx-auto mt-4 overflow-hidden rounded-lg shadow-md">
+    <!-- Contenedor de imágenes -->
+    <div id="carousel" class="relative w-full h-64 sm:h-80 md:h-96">
+      <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-100">
+        <img src="./img/banner1.png" class="w-full h-full object-cover" alt="Banner 1">
+      </div>
+      <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-0">
+        <img src="./img/banner2.svg" class="w-full h-full object-cover" alt="Banner 2">
+      </div>
+      <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-0">
+        <img src="https://picsum.photos/id/1020/1200/400" class="w-full h-full object-cover" alt="Banner 3">
+      </div>
+      <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-0">
+        <img src="https://picsum.photos/id/1024/1200/400" class="w-full h-full object-cover" alt="Banner 4">
+      </div>
     </div>
-    <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-0">
-      <img src="https://picsum.photos/id/1018/1200/400" class="w-full h-full object-cover" alt="Banner 2">
-    </div>
-    <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-0">
-      <img src="https://picsum.photos/id/1020/1200/400" class="w-full h-full object-cover" alt="Banner 3">
-    </div>
-    <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-0">
-      <img src="https://picsum.photos/id/1024/1200/400" class="w-full h-full object-cover" alt="Banner 4">
-    </div>
-  </div>
 
-  <!-- Botones navegación -->
-  <button id="prevBtn" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80">
-    <i class="ph ph-caret-left text-2xl"></i>
-  </button>
-  <button id="nextBtn" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80">
-    <i class="ph ph-caret-right text-2xl"></i>
-  </button>
-</section>
-
-<!-- SECCIÓN DE PRODUCTOS -->
-<section id="productos" class="max-w-7xl mx-auto px-4 py-8">
-  <h2 class="text-2xl font-bold mb-6">Productos Destacados</h2>
-  <div id="lista-productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    <!-- Tarjetas generadas por JS -->
-  </div>
-</section>
-
-<!-- CARRITO LATERAL -->
-<aside id="carrito" class="fixed right-0 top-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50 flex flex-col">
-  <!-- Encabezado -->
-  <div class="flex items-center justify-between p-4 border-b">
-    <h2 class="text-lg font-semibold">🛒 Mi Carrito</h2>
-    <button id="cerrarCarrito" class="text-gray-500 hover:text-red-600 text-2xl leading-none">&times;</button>
-  </div>
-
-  <!-- Lista de productos -->
-  <div id="items-carrito" class="flex-1 overflow-y-auto p-4 space-y-4">
-    <!-- Productos se insertan aquí vía JS -->
-  </div>
-
-  <!-- Total y acciones -->
-  <div class="border-t p-4">
-    <p class="text-lg font-bold mb-2">Total: <span id="total-carrito">COP 0.00</span></p>
-    <button class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-md font-semibold">
-      Finalizar Compra
+    <!-- Botones navegación -->
+    <button id="prevBtn"
+      class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80">
+      <i class="ph ph-caret-left text-2xl"></i>
     </button>
-  </div>
-</aside>
+    <button id="nextBtn"
+      class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80">
+      <i class="ph ph-caret-right text-2xl"></i>
+    </button>
+  </section>
 
+  <!-- SECCIÓN DE PRODUCTOS -->
+  <section id="productos" class="max-w-7xl mx-auto px-4 py-8">
+    <h2 class="text-2xl font-bold mb-6">Productos Destacados</h2>
+    <div id="lista-productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <!-- Tarjetas generadas por JS -->
+    </div>
+  </section>
 
-<script src="./js/main.js"></script>
+  <!-- CARRITO LATERAL -->
+  <aside id="carrito"
+    class="fixed right-0 top-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50 flex flex-col">
+    <!-- Encabezado -->
+    <div class="flex items-center justify-between p-4 border-b">
+      <h2 class="text-lg font-semibold">🛒 Mi Carrito</h2>
+      <button id="cerrarCarrito" class="text-gray-500 hover:text-red-600 text-2xl leading-none">&times;</button>
+    </div>
+
+    <!-- Lista de productos -->
+    <div id="items-carrito" class="flex-1 overflow-y-auto p-4 space-y-4">
+      <!-- Productos se insertan aquí vía JS -->
+    </div>
+
+    <!-- Total y acciones -->
+    <div class="border-t p-4">
+      <p class="text-lg font-bold mb-2">Total: <span id="total-carrito">COP 0.00</span></p>
+      <button class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-md font-semibold">
+        Finalizar Compra
+      </button>
+    </div>
+  </aside>
+
+  <script src="./js/main.js"></script>
 </body>
+
 </html>
