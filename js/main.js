@@ -44,6 +44,12 @@ const carritoPanel = document.getElementById('carrito');
 const cerrarCarrito = document.getElementById('cerrarCarrito');
 const carritoBoton = document.querySelector('a[href="#"] i.ph-shopping-cart')?.closest('a');
 
+// Configuración del modal de login
+const cuentaBoton = document.querySelector('a[href="#"] i.ph-user-circle')?.closest('a');
+const modalLogin = document.getElementById('modal-login');
+const cerrarModal = document.getElementById('cerrar-modal');
+const overlay = document.getElementById('overlay-modal');
+
 cerrarCarrito.addEventListener('click', () => {
     carritoPanel.classList.add('translate-x-full');
 });
@@ -53,7 +59,95 @@ carritoBoton?.addEventListener('click', (e) => {
     carritoPanel.classList.remove('translate-x-full');
 });
 
+// Event listeners para el modal de login
+cuentaBoton?.addEventListener('click', (e) => {
+    e.preventDefault();
+    abrirModalLogin();
+});
+
+cerrarModal?.addEventListener('click', cerrarModalLogin);
+overlay?.addEventListener('click', cerrarModalLogin);
+
 let carrito = [];
+
+// Funciones del modal de login
+function abrirModalLogin() {
+    modalLogin?.classList.remove('hidden');
+    modalLogin?.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+}
+
+function cerrarModalLogin() {
+    modalLogin?.classList.add('hidden');
+    modalLogin?.classList.remove('flex');
+    document.body.style.overflow = 'auto';
+}
+
+// Función para manejar el login
+function manejarLogin(event) {
+    event.preventDefault();
+    const email = document.getElementById('email-login').value;
+    const password = document.getElementById('password-login').value;
+    
+    if (email && password) {
+        // Aquí puedes agregar la lógica de autenticación real
+        alert(`Bienvenido! Email: ${email}`);
+        cerrarModalLogin();
+        
+        // Cambiar el texto del botón cuenta
+        const cuentaTexto = cuentaBoton?.querySelector('span');
+        if (cuentaTexto) {
+            cuentaTexto.textContent = 'Mi Cuenta';
+        }
+    } else {
+        alert('Por favor, completa todos los campos');
+    }
+}
+
+// Función para alternar entre login y registro
+function alternarFormulario(tipo) {
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    const loginTab = document.getElementById('login-tab');
+    const registerTab = document.getElementById('register-tab');
+    
+    if (tipo === 'login') {
+        loginForm?.classList.remove('hidden');
+        registerForm?.classList.add('hidden');
+        loginTab?.classList.add('border-b-2', 'border-red-600', 'text-red-600');
+        loginTab?.classList.remove('text-gray-600');
+        registerTab?.classList.remove('border-b-2', 'border-red-600', 'text-red-600');
+        registerTab?.classList.add('text-gray-600');
+    } else {
+        registerForm?.classList.remove('hidden');
+        loginForm?.classList.add('hidden');
+        registerTab?.classList.add('border-b-2', 'border-red-600', 'text-red-600');
+        registerTab?.classList.remove('text-gray-600');
+        loginTab?.classList.remove('border-b-2', 'border-red-600', 'text-red-600');
+        loginTab?.classList.add('text-gray-600');
+    }
+}
+
+// Función para manejar el registro
+function manejarRegistro(event) {
+    event.preventDefault();
+    const nombre = document.getElementById('nombre-registro').value;
+    const email = document.getElementById('email-registro').value;
+    const password = document.getElementById('password-registro').value;
+    const confirmarPassword = document.getElementById('confirmar-password').value;
+    
+    if (nombre && email && password && confirmarPassword) {
+        if (password === confirmarPassword) {
+            // Aquí puedes agregar la lógica de registro real
+            alert(`¡Registro exitoso! Bienvenido ${nombre}`);
+            cerrarModalLogin();
+        } else {
+            alert('Las contraseñas no coinciden');
+        }
+    } else {
+        alert('Por favor, completa todos los campos');
+    }
+}
 
 // Leer carrito desde localStorage
 function cargarCarritoDesdeStorage() {
