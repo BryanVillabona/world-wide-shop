@@ -47,8 +47,8 @@
 
     <nav class="bg-gray-800 text-sm relative z-40">
       <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center gap-4">
-        <a href="#" class="hover:text-yellow-400">Inicio</a>
-        <a href="#" class="hover:text-yellow-400">Electrónica</a>
+        <a href="#" onclick="filtrarPorCategoria('todos')" class="hover:text-yellow-400">Inicio</a>
+        <a href="#" onclick="filtrarPorCategoria('electronics')" class="hover:text-yellow-400">Electrónica</a>
 
         <div class="relative group">
           <button class="hover:text-yellow-400 flex items-center gap-1 focus:outline-none">
@@ -57,12 +57,12 @@
           </button>
           <div
             class="absolute left-0 mt-2 w-40 bg-white text-black rounded-md shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition-all duration-200 invisible group-hover:visible z-50">
-            <a href="#" class="block px-4 py-2 hover:bg-gray-200">Ropa Hombre</a>
-            <a href="#" class="block px-4 py-2 hover:bg-gray-200">Ropa Mujer</a>
+            <a href="#" onclick="filtrarPorCategoria('men\'s clothing')" class="block px-4 py-2 hover:bg-gray-200">Ropa Hombre</a>
+            <a href="#" onclick="filtrarPorCategoria('women\'s clothing')" class="block px-4 py-2 hover:bg-gray-200">Ropa Mujer</a>
           </div>
         </div>
 
-        <a href="#" class="hover:text-yellow-400">Joyería</a>
+        <a href="#" onclick="filtrarPorCategoria('jewelery')" class="hover:text-yellow-400">Joyería</a>
         <a href="#" class="hover:text-yellow-400">Ofertas</a>
         <a href="#" class="hover:text-yellow-400">Destacados</a>
         <a href="#" class="hover:text-yellow-400">Mis Pedidos</a>
@@ -255,7 +255,26 @@
 
   <!-- SECCIÓN DE PRODUCTOS -->
   <section id="productos" class="max-w-7xl mx-auto px-4 py-8">
-    <h2 class="text-2xl font-bold mb-6">Productos Destacados</h2>
+    <div class="flex justify-between items-center mb-6">
+      <h2 id="titulo-productos" class="text-2xl font-bold">Productos Destacados</h2>
+      <div class="flex gap-2">
+        <button onclick="filtrarPorCategoria('todos')" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md text-sm">
+          Todos
+        </button>
+        <button onclick="filtrarPorCategoria('electronics')" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md text-sm">
+          Electrónica
+        </button>
+        <button onclick="filtrarPorCategoria('jewelery')" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md text-sm">
+          Joyería
+        </button>
+        <button onclick="filtrarPorCategoria('men\'s clothing')" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md text-sm">
+          Hombre
+        </button>
+        <button onclick="filtrarPorCategoria('women\'s clothing')" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md text-sm">
+          Mujer
+        </button>
+      </div>
+    </div>
     <div id="lista-productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
       <!-- Tarjetas generadas por JS -->
     </div>

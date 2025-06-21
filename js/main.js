@@ -4,6 +4,10 @@ const next = document.getElementById('nextBtn');
 let current = 0;
 let interval;
 
+// Variables globales para productos y filtros
+let todosLosProductos = [];
+let categoriaActiva = 'todos';
+
 function showSlide(index) {
     items.forEach((item, i) => {
         item.classList.toggle('opacity-100', i === index);
@@ -21,23 +25,29 @@ function prevSlide() {
     showSlide(current);
 }
 
-next.addEventListener('click', () => {
-    nextSlide();
-    resetInterval();
-});
+if (next) {
+    next.addEventListener('click', () => {
+        nextSlide();
+        resetInterval();
+    });
+}
 
-prev.addEventListener('click', () => {
-    prevSlide();
-    resetInterval();
-});
+if (prev) {
+    prev.addEventListener('click', () => {
+        prevSlide();
+        resetInterval();
+    });
+}
 
 function resetInterval() {
     clearInterval(interval);
     interval = setInterval(nextSlide, 5000);
 }
 
-// Iniciar carrusel automático
-interval = setInterval(nextSlide, 5000);
+// Iniciar carrusel automático solo si hay elementos
+if (items.length > 0) {
+    interval = setInterval(nextSlide, 5000);
+}
 
 // Configuración del carrito
 const carritoPanel = document.getElementById('carrito');
@@ -50,9 +60,11 @@ const modalLogin = document.getElementById('modal-login');
 const cerrarModal = document.getElementById('cerrar-modal');
 const overlay = document.getElementById('overlay-modal');
 
-cerrarCarrito.addEventListener('click', () => {
-    carritoPanel.classList.add('translate-x-full');
-});
+if (cerrarCarrito) {
+    cerrarCarrito.addEventListener('click', () => {
+        carritoPanel.classList.add('translate-x-full');
+    });
+}
 
 carritoBoton?.addEventListener('click', (e) => {
     e.preventDefault();
@@ -90,11 +102,9 @@ function manejarLogin(event) {
     const password = document.getElementById('password-login').value;
     
     if (email && password) {
-        // Aquí puedes agregar la lógica de autenticación real
         alert(`Bienvenido! Email: ${email}`);
         cerrarModalLogin();
         
-        // Cambiar el texto del botón cuenta
         const cuentaTexto = cuentaBoton?.querySelector('span');
         if (cuentaTexto) {
             cuentaTexto.textContent = 'Mi Cuenta';
@@ -138,7 +148,6 @@ function manejarRegistro(event) {
     
     if (nombre && email && password && confirmarPassword) {
         if (password === confirmarPassword) {
-            // Aquí puedes agregar la lógica de registro real
             alert(`¡Registro exitoso! Bienvenido ${nombre}`);
             cerrarModalLogin();
         } else {
@@ -149,29 +158,35 @@ function manejarRegistro(event) {
     }
 }
 
-// Leer carrito desde localStorage
+// Funciones del carrito
 function cargarCarritoDesdeStorage() {
     const data = localStorage.getItem('carrito');
     if (data) {
-        carrito = JSON.parse(data);
-        renderizarCarrito();
+        try {
+            carrito = JSON.parse(data);
+            renderizarCarrito();
+        } catch (error) {
+            console.error('Error al cargar carrito:', error);
+            carrito = [];
+            actualizarContadorCarrito();
+        }
     } else {
-        // Si no hay carrito guardado, asegurar que el contador esté en 0
         actualizarContadorCarrito();
     }
 }
 
-// Guardar carrito en localStorage
 function guardarCarritoEnStorage() {
-    localStorage.setItem('carrito', JSON.stringify(carrito));
+    try {
+        localStorage.setItem('carrito', JSON.stringify(carrito));
+    } catch (error) {
+        console.error('Error al guardar carrito:', error);
+    }
 }
 
-// Calcular total del carrito
 function calcularTotal() {
     return carrito.reduce((total, prod) => total + prod.price * prod.cantidad, 0).toFixed(2);
 }
 
-// Actualizar contador del carrito en el header
 function actualizarContadorCarrito() {
     const contador = document.querySelector('.absolute.-top-1.-right-2');
     const totalItems = carrito.reduce((total, prod) => total + prod.cantidad, 0);
@@ -181,10 +196,12 @@ function actualizarContadorCarrito() {
     }
 }
 
-// Renderizar carrito en la barra lateral
 function renderizarCarrito() {
     const contenedor = document.getElementById('items-carrito');
     const totalTexto = document.getElementById('total-carrito');
+    
+    if (!contenedor || !totalTexto) return;
+    
     contenedor.innerHTML = '';
 
     if (carrito.length === 0) {
@@ -214,26 +231,62 @@ function renderizarCarrito() {
     actualizarContadorCarrito();
 }
 
-// Eliminar producto del carrito
 function eliminarDelCarrito(id) {
     carrito = carrito.filter(prod => prod.id !== id);
     guardarCarritoEnStorage();
     renderizarCarrito();
 }
 
-// Función única para cargar productos
-const contenedor = document.getElementById('lista-productos');
+// Función para filtrar productos por categoría
+function filtrarPorCategoria(categoria) {
+    categoriaActiva = categoria;
+    
+    // Actualizar título según la categoría
+    const titulo = document.getElementById('titulo-productos');
+    const titulos = {
+        'todos': 'Productos Destacados',
+        'electronics': 'Productos de Electrónica',
+        'jewelery': 'Productos de Joyería',
+        "men's clothing": 'Ropa para Hombre',
+        "women's clothing": 'Ropa para Mujer'
+    };
+    
+    if (titulo) {
+        titulo.textContent = titulos[categoria] || 'Productos Destacados';
+    }
+    
+    // Filtrar y mostrar productos
+    mostrarProductos(todosLosProductos, categoria);
+    
+    // Prevenir navegación del enlace
+    if (event) {
+        event.preventDefault();
+    }
+    return false;
+}
 
-async function cargarProductos() {
-    try {
-        const res = await fetch('https://fakestoreapi.com/products');
-        const productos = await res.json();
+// Función para mostrar productos (filtrados o todos)
+function mostrarProductos(productos, categoria = 'todos') {
+    const contenedor = document.getElementById('lista-productos');
+    if (!contenedor) return;
+    
+    contenedor.innerHTML = '';
+    
+    // Filtrar productos según la categoría
+    const productosFiltrados = categoria === 'todos' 
+        ? productos 
+        : productos.filter(producto => producto.category === categoria);
+    
+    if (productosFiltrados.length === 0) {
+        contenedor.innerHTML = '<p class="text-gray-500 col-span-full text-center">No se encontraron productos en esta categoría.</p>';
+        return;
+    }
+    
+    productosFiltrados.forEach(producto => {
+        const tarjeta = document.createElement('div');
+        tarjeta.className = 'bg-white rounded-lg shadow-md p-4 flex flex-col hover:shadow-lg transition';
 
-        productos.forEach(producto => {
-            const tarjeta = document.createElement('div');
-            tarjeta.className = 'bg-white rounded-lg shadow-md p-4 flex flex-col hover:shadow-lg transition';
-
-            tarjeta.innerHTML = `
+        tarjeta.innerHTML = `
           <img src="${producto.image}" alt="${producto.title}" class="h-40 w-full object-contain mb-4">
           <h3 class="text-sm font-semibold mb-1 line-clamp-2">${producto.title}</h3>
           <p class="text-lg font-bold text-gray-800 mb-2">💲${producto.price.toFixed(2)}</p>
@@ -246,26 +299,54 @@ async function cargarProductos() {
           </button>
         `;
 
-            contenedor.appendChild(tarjeta);
-        });
+        contenedor.appendChild(tarjeta);
+    });
 
-        // Activar botones
-        activarBotonesCarrito(productos);
+    // Reactivar botones del carrito
+    activarBotonesCarrito(productos);
+}
+
+// Función para cargar productos desde la API
+async function cargarProductos() {
+    try {
+        const res = await fetch('https://fakestoreapi.com/products');
+        const productos = await res.json();
+        
+        // Guardar todos los productos para filtrado
+        todosLosProductos = productos;
+        
+        // Mostrar productos iniciales
+        mostrarProductos(productos, categoriaActiva);
+        
     } catch (error) {
-        contenedor.innerHTML = `<p class="text-red-500">Error al cargar los productos.</p>`;
+        console.error('Error al cargar productos:', error);
+        const contenedor = document.getElementById('lista-productos');
+        if (contenedor) {
+            contenedor.innerHTML = `<p class="text-red-500 col-span-full text-center">Error al cargar los productos. Por favor, recarga la página.</p>`;
+        }
     }
 }
 
 function activarBotonesCarrito(productos) {
     const botones = document.querySelectorAll('.btn-carrito');
     botones.forEach(boton => {
-        boton.addEventListener('click', () => {
-            const id = parseInt(boton.getAttribute('data-id'));
+        // Remover event listeners anteriores clonando el elemento
+        const nuevoBoton = boton.cloneNode(true);
+        boton.parentNode.replaceChild(nuevoBoton, boton);
+        
+        nuevoBoton.addEventListener('click', () => {
+            const id = parseInt(nuevoBoton.getAttribute('data-id'));
             const producto = productos.find(p => p.id === id);
+            
+            if (!producto) {
+                console.error('Producto no encontrado:', id);
+                return;
+            }
+            
             const existente = carrito.find(p => p.id === id);
             
             if (existente) {
-                existente.cantidad +=1;
+                existente.cantidad += 1;
             } else {
                 carrito.push({
                     id: producto.id,
@@ -278,6 +359,14 @@ function activarBotonesCarrito(productos) {
 
             guardarCarritoEnStorage();
             renderizarCarrito();
+            
+            // Mostrar feedback visual
+            nuevoBoton.textContent = '¡Agregado!';
+            nuevoBoton.style.backgroundColor = '#10b981';
+            setTimeout(() => {
+                nuevoBoton.textContent = 'Agregar al carrito';
+                nuevoBoton.style.backgroundColor = '';
+            }, 1000);
         });
     });
 }
