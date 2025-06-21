@@ -248,7 +248,8 @@ function filtrarPorCategoria(categoria) {
         'electronics': 'Productos de Electrónica',
         'jewelery': 'Productos de Joyería',
         "men's clothing": 'Ropa para Hombre',
-        "women's clothing": 'Ropa para Mujer'
+        "women's clothing": 'Ropa para Mujer',
+        'destacados': 'Productos Destacados (4+ Estrellas)'
     };
     
     if (titulo) {
@@ -265,6 +266,12 @@ function filtrarPorCategoria(categoria) {
     return false;
 }
 
+// Función para mostrar productos destacados (4+ estrellas)
+function mostrarProductosDestacados() {
+    categoriaActiva = 'destacados';
+    filtrarPorCategoria('destacados');
+}
+
 // Función para mostrar productos (filtrados o todos)
 function mostrarProductos(productos, categoria = 'todos') {
     const contenedor = document.getElementById('lista-productos');
@@ -273,25 +280,48 @@ function mostrarProductos(productos, categoria = 'todos') {
     contenedor.innerHTML = '';
     
     // Filtrar productos según la categoría
-    const productosFiltrados = categoria === 'todos' 
-        ? productos 
-        : productos.filter(producto => producto.category === categoria);
+    let productosFiltrados;
+    
+    if (categoria === 'todos') {
+        productosFiltrados = productos;
+    } else if (categoria === 'destacados') {
+        // Filtrar productos con rating >= 4.0
+        productosFiltrados = productos.filter(producto => producto.rating.rate >= 4.0);
+    } else {
+        productosFiltrados = productos.filter(producto => producto.category === categoria);
+    }
     
     if (productosFiltrados.length === 0) {
-        contenedor.innerHTML = '<p class="text-gray-500 col-span-full text-center">No se encontraron productos en esta categoría.</p>';
+        const mensaje = categoria === 'destacados' 
+            ? 'No se encontraron productos destacados (4+ estrellas).' 
+            : 'No se encontraron productos en esta categoría.';
+        contenedor.innerHTML = `<p class="text-gray-500 col-span-full text-center">${mensaje}</p>`;
         return;
+    }
+    
+    // Ordenar productos destacados por rating descendente
+    if (categoria === 'destacados') {
+        productosFiltrados.sort((a, b) => b.rating.rate - a.rating.rate);
     }
     
     productosFiltrados.forEach(producto => {
         const tarjeta = document.createElement('div');
         tarjeta.className = 'bg-white rounded-lg shadow-md p-4 flex flex-col hover:shadow-lg transition';
+        
+        // Agregar badge para productos destacados
+        const badgeDestacado = categoria === 'destacados' 
+            ? '<div class="absolute top-2 right-2 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded-full">⭐ DESTACADO</div>' 
+            : '';
 
         tarjeta.innerHTML = `
-          <img src="${producto.image}" alt="${producto.title}" class="h-40 w-full object-contain mb-4">
+          <div class="relative">
+            ${badgeDestacado}
+            <img src="${producto.image}" alt="${producto.title}" class="h-40 w-full object-contain mb-4">
+          </div>
           <h3 class="text-sm font-semibold mb-1 line-clamp-2">${producto.title}</h3>
           <p class="text-lg font-bold text-gray-800 mb-2">💲${producto.price.toFixed(2)}</p>
           <div class="flex items-center text-yellow-500 mb-2">
-            ${'★'.repeat(Math.round(producto.rating.rate))}<span class="ml-1 text-sm text-gray-600">(${producto.rating.count})</span>
+            ${'★'.repeat(Math.round(producto.rating.rate))}<span class="ml-1 text-sm text-gray-600">(${producto.rating.count}) - ${producto.rating.rate.toFixed(1)} ⭐</span>
           </div>
           <p class="text-xs text-gray-500 mb-4 capitalize">${producto.category}</p>
           <button class="btn-carrito mt-auto bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-md text-sm font-semibold" data-id="${producto.id}">
@@ -304,6 +334,22 @@ function mostrarProductos(productos, categoria = 'todos') {
 
     // Reactivar botones del carrito
     activarBotonesCarrito(productos);
+    
+    // Mostrar información adicional para productos destacados
+    if (categoria === 'destacados') {
+        const infoDiv = document.createElement('div');
+        infoDiv.className = 'col-span-full bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4';
+        infoDiv.innerHTML = `
+            <div class="flex items-center gap-2 text-yellow-800">
+                <i class="ph ph-star text-xl"></i>
+                <span class="font-semibold">Productos Destacados</span>
+            </div>
+            <p class="text-sm text-yellow-700 mt-1">
+                Mostrando ${productosFiltrados.length} productos con calificación de 4.0 estrellas o superior, ordenados por mejor puntuación.
+            </p>
+        `;
+        contenedor.insertBefore(infoDiv, contenedor.firstChild);
+    }
 }
 
 // Función para cargar productos desde la API
