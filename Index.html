@@ -63,9 +63,8 @@
         </div>
 
         <a href="#" onclick="filtrarPorCategoria('jewelery')" class="hover:text-yellow-400">Joyería</a>
-        <a href="#" class="hover:text-yellow-400">Ofertas</a>
         <a href="#" onclick="mostrarProductosDestacados()" class="hover:text-yellow-400">Destacados</a>
-        <a href="#" class="hover:text-yellow-400">Mis Pedidos</a>
+        <a href="#" onclick="mostrarMisPedidos()" class="hover:text-yellow-400">Mis Pedidos</a>
         <a href="#" class="hover:text-yellow-400">Ayuda</a>
       </div>
     </nav>
@@ -279,6 +278,13 @@
       <!-- Tarjetas generadas por JS -->
     </div>
   </section>
+
+  <section id="mis-pedidos" class="max-w-7xl mx-auto px-4 py-8 hidden">
+  <h2 class="text-2xl font-bold mb-4">Mis Pedidos</h2>
+  <div id="lista-pedidos" class="space-y-4">
+    <!-- Se insertan los pedidos desde JS -->
+  </div>
+</section>
 
   <!-- CARRITO LATERAL -->
   <aside id="carrito"

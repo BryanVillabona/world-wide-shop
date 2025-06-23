@@ -100,11 +100,11 @@ function manejarLogin(event) {
     event.preventDefault();
     const email = document.getElementById('email-login').value;
     const password = document.getElementById('password-login').value;
-    
+
     if (email && password) {
         alert(`Bienvenido! Email: ${email}`);
         cerrarModalLogin();
-        
+
         const cuentaTexto = cuentaBoton?.querySelector('span');
         if (cuentaTexto) {
             cuentaTexto.textContent = 'Mi Cuenta';
@@ -120,7 +120,7 @@ function alternarFormulario(tipo) {
     const registerForm = document.getElementById('register-form');
     const loginTab = document.getElementById('login-tab');
     const registerTab = document.getElementById('register-tab');
-    
+
     if (tipo === 'login') {
         loginForm?.classList.remove('hidden');
         registerForm?.classList.add('hidden');
@@ -145,7 +145,7 @@ function manejarRegistro(event) {
     const email = document.getElementById('email-registro').value;
     const password = document.getElementById('password-registro').value;
     const confirmarPassword = document.getElementById('confirmar-password').value;
-    
+
     if (nombre && email && password && confirmarPassword) {
         if (password === confirmarPassword) {
             alert(`¡Registro exitoso! Bienvenido ${nombre}`);
@@ -190,7 +190,7 @@ function calcularTotal() {
 function actualizarContadorCarrito() {
     const contador = document.querySelector('.absolute.-top-1.-right-2');
     const totalItems = carrito.reduce((total, prod) => total + prod.cantidad, 0);
-    
+
     if (contador) {
         contador.textContent = totalItems;
     }
@@ -199,9 +199,9 @@ function actualizarContadorCarrito() {
 function renderizarCarrito() {
     const contenedor = document.getElementById('items-carrito');
     const totalTexto = document.getElementById('total-carrito');
-    
+
     if (!contenedor || !totalTexto) return;
-    
+
     contenedor.innerHTML = '';
 
     if (carrito.length === 0) {
@@ -240,7 +240,11 @@ function eliminarDelCarrito(id) {
 // Función para filtrar productos por categoría
 function filtrarPorCategoria(categoria) {
     categoriaActiva = categoria;
-    
+
+    document.getElementById('mis-pedidos')?.classList.add('hidden');
+    document.getElementById('productos')?.classList.remove('hidden');
+
+
     // Actualizar título según la categoría
     const titulo = document.getElementById('titulo-productos');
     const titulos = {
@@ -251,14 +255,14 @@ function filtrarPorCategoria(categoria) {
         "women's clothing": 'Ropa para Mujer',
         'destacados': 'Productos Destacados (4+ Estrellas)'
     };
-    
+
     if (titulo) {
         titulo.textContent = titulos[categoria] || 'Productos Destacados';
     }
-    
+
     // Filtrar y mostrar productos
     mostrarProductos(todosLosProductos, categoria);
-    
+
     // Prevenir navegación del enlace
     if (event) {
         event.preventDefault();
@@ -276,12 +280,12 @@ function mostrarProductosDestacados() {
 function mostrarProductos(productos, categoria = 'todos') {
     const contenedor = document.getElementById('lista-productos');
     if (!contenedor) return;
-    
+
     contenedor.innerHTML = '';
-    
+
     // Filtrar productos según la categoría
     let productosFiltrados;
-    
+
     if (categoria === 'todos') {
         productosFiltrados = productos;
     } else if (categoria === 'destacados') {
@@ -290,27 +294,27 @@ function mostrarProductos(productos, categoria = 'todos') {
     } else {
         productosFiltrados = productos.filter(producto => producto.category === categoria);
     }
-    
+
     if (productosFiltrados.length === 0) {
-        const mensaje = categoria === 'destacados' 
-            ? 'No se encontraron productos destacados (4+ estrellas).' 
+        const mensaje = categoria === 'destacados'
+            ? 'No se encontraron productos destacados (4+ estrellas).'
             : 'No se encontraron productos en esta categoría.';
         contenedor.innerHTML = `<p class="text-gray-500 col-span-full text-center">${mensaje}</p>`;
         return;
     }
-    
+
     // Ordenar productos destacados por rating descendente
     if (categoria === 'destacados') {
         productosFiltrados.sort((a, b) => b.rating.rate - a.rating.rate);
     }
-    
+
     productosFiltrados.forEach(producto => {
         const tarjeta = document.createElement('div');
         tarjeta.className = 'bg-white rounded-lg shadow-md p-4 flex flex-col hover:shadow-lg transition';
-        
+
         // Agregar badge para productos destacados
-        const badgeDestacado = categoria === 'destacados' 
-            ? '<div class="absolute top-2 right-2 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded-full">⭐ DESTACADO</div>' 
+        const badgeDestacado = categoria === 'destacados'
+            ? '<div class="absolute top-2 right-2 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded-full">⭐ DESTACADO</div>'
             : '';
 
         tarjeta.innerHTML = `
@@ -334,7 +338,7 @@ function mostrarProductos(productos, categoria = 'todos') {
 
     // Reactivar botones del carrito
     activarBotonesCarrito(productos);
-    
+
     // Mostrar información adicional para productos destacados
     if (categoria === 'destacados') {
         const infoDiv = document.createElement('div');
@@ -357,13 +361,13 @@ async function cargarProductos() {
     try {
         const res = await fetch('https://fakestoreapi.com/products');
         const productos = await res.json();
-        
+
         // Guardar todos los productos para filtrado
         todosLosProductos = productos;
-        
+
         // Mostrar productos iniciales
         mostrarProductos(productos, categoriaActiva);
-        
+
     } catch (error) {
         console.error('Error al cargar productos:', error);
         const contenedor = document.getElementById('lista-productos');
@@ -379,18 +383,18 @@ function activarBotonesCarrito(productos) {
         // Remover event listeners anteriores clonando el elemento
         const nuevoBoton = boton.cloneNode(true);
         boton.parentNode.replaceChild(nuevoBoton, boton);
-        
+
         nuevoBoton.addEventListener('click', () => {
             const id = parseInt(nuevoBoton.getAttribute('data-id'));
             const producto = productos.find(p => p.id === id);
-            
+
             if (!producto) {
                 console.error('Producto no encontrado:', id);
                 return;
             }
-            
+
             const existente = carrito.find(p => p.id === id);
-            
+
             if (existente) {
                 existente.cantidad += 1;
             } else {
@@ -405,7 +409,7 @@ function activarBotonesCarrito(productos) {
 
             guardarCarritoEnStorage();
             renderizarCarrito();
-            
+
             // Mostrar feedback visual
             nuevoBoton.textContent = '¡Agregado!';
             nuevoBoton.style.backgroundColor = '#10b981';
@@ -422,3 +426,37 @@ document.addEventListener('DOMContentLoaded', () => {
     cargarCarritoDesdeStorage();
     cargarProductos();
 });
+
+function mostrarMisPedidos() {
+    const pedidosSection = document.getElementById('mis-pedidos');
+    const productosSection = document.getElementById('productos');
+    const pedidosLista = document.getElementById('lista-pedidos');
+
+    pedidosSection.classList.remove('hidden');
+    productosSection.classList.add('hidden');
+
+    if (!pedidosLista) return;
+
+    pedidosLista.innerHTML = ''; // Limpia contenido anterior
+
+    if (carrito.length === 0) {
+        pedidosLista.innerHTML = '<p class="text-gray-500">No has realizado ningún pedido aún.</p>';
+        return;
+    }
+
+    carrito.forEach(prod => {
+        const div = document.createElement('div');
+        div.className = 'bg-white p-4 rounded shadow flex items-center gap-4';
+
+        div.innerHTML = `
+      <img src="${prod.image}" alt="${prod.title}" class="w-16 h-16 object-contain rounded">
+      <div>
+        <h3 class="font-semibold text-lg">${prod.title}</h3>
+        <p class="text-sm text-gray-600">Cantidad: ${prod.cantidad}</p>
+        <p class="text-sm text-gray-600">Precio unitario: $${prod.price.toFixed(2)}</p>
+        <p class="text-sm font-bold text-red-600">Subtotal: $${(prod.price * prod.cantidad).toFixed(2)}</p>
+      </div>
+    `;
+        pedidosLista.appendChild(div);
+    });
+}
