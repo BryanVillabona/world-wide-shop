@@ -7,6 +7,7 @@ let interval;
 // Variables globales para productos y filtros
 let todosLosProductos = [];
 let categoriaActiva = 'todos';
+let pedidosRealizados = []; // Nueva variable para almacenar pedidos realizados
 
 function showSlide(index) {
     items.forEach((item, i) => {
@@ -158,19 +159,175 @@ function manejarRegistro(event) {
     }
 }
 
+// Nueva función para crear el modal de confirmación de compra
+function crearModalConfirmacion() {
+    // Verificar si el modal ya existe
+    if (document.getElementById('modal-confirmacion')) {
+        return;
+    }
+
+    const modalHTML = `
+    <div id="modal-confirmacion" class="fixed inset-0 z-50 hidden items-center justify-center">
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        
+        <!-- Modal Container -->
+        <div class="relative bg-white rounded-lg shadow-2xl w-full max-w-md mx-4 overflow-hidden">
+            <!-- Header -->
+            <div class="flex items-center justify-center p-6 border-b bg-red-600 text-white">
+                <div class="text-center">
+                    <i class="ph ph-shopping-cart text-3xl mb-2"></i>
+                    <h2 class="text-xl font-semibold">Confirmar Compra</h2>
+                </div>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6">
+                <div class="text-center mb-6">
+                    <p class="text-gray-700 mb-4">¿Estás seguro de que deseas finalizar tu compra?</p>
+                    <div class="bg-gray-50 p-4 rounded-lg">
+                        <p class="text-sm text-gray-600 mb-2">Resumen de tu pedido:</p>
+                        <p class="text-lg font-bold text-red-600" id="total-confirmacion">COP 0.00</p>
+                        <p class="text-sm text-gray-500" id="items-confirmacion">0 productos</p>
+                    </div>
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex flex-col gap-3">
+                    <button id="confirmar-compra" 
+                            class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-md transition duration-200 flex items-center justify-center gap-2">
+                        <i class="ph ph-check-circle text-lg"></i>
+                        Confirmar Compra
+                    </button>
+                    <button id="cancelar-compra" 
+                            class="w-full bg-gray-500 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-md transition duration-200 flex items-center justify-center gap-2">
+                        <i class="ph ph-x-circle text-lg"></i>
+                        Seguir Comprando
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    `;
+
+    document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+    // Agregar event listeners
+    const modalConfirmacion = document.getElementById('modal-confirmacion');
+    const btnConfirmar = document.getElementById('confirmar-compra');
+    const btnCancelar = document.getElementById('cancelar-compra');
+
+    btnConfirmar.addEventListener('click', confirmarCompra);
+    btnCancelar.addEventListener('click', cerrarModalConfirmacion);
+
+    // Cerrar modal al hacer clic en el overlay
+    modalConfirmacion.addEventListener('click', (e) => {
+        if (e.target === modalConfirmacion) {
+            cerrarModalConfirmacion();
+        }
+    });
+}
+
+// Función para abrir el modal de confirmación
+function abrirModalConfirmacion() {
+    if (carrito.length === 0) {
+        alert('Tu carrito está vacío');
+        return;
+    }
+
+    crearModalConfirmacion();
+    
+    const modal = document.getElementById('modal-confirmacion');
+    const totalConfirmacion = document.getElementById('total-confirmacion');
+    const itemsConfirmacion = document.getElementById('items-confirmacion');
+    
+    // Actualizar información del pedido
+    const total = calcularTotal();
+    const totalItems = carrito.reduce((sum, prod) => sum + prod.cantidad, 0);
+    
+    totalConfirmacion.textContent = `COP ${total}`;
+    itemsConfirmacion.textContent = `${totalItems} producto${totalItems !== 1 ? 's' : ''}`;
+    
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+}
+
+// Función para cerrar el modal de confirmación
+function cerrarModalConfirmacion() {
+    const modal = document.getElementById('modal-confirmacion');
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+    document.body.style.overflow = 'auto';
+}
+
+// Función para confirmar la compra
+function confirmarCompra() {
+    // Agregar productos del carrito a pedidos realizados
+    const nuevoPedido = {
+        id: Date.now(),
+        fecha: new Date().toLocaleDateString(),
+        productos: [...carrito],
+        total: parseFloat(calcularTotal())
+    };
+    
+    pedidosRealizados.push(nuevoPedido);
+    
+    // Limpiar carrito
+    carrito = [];
+    
+    // Guardar cambios en localStorage
+    guardarCarritoEnStorage();
+    guardarPedidosEnStorage();
+    
+    // Actualizar interfaces
+    renderizarCarrito();
+    
+    // Cerrar modal
+    cerrarModalConfirmacion();
+    
+    // Cerrar carrito lateral
+    carritoPanel.classList.add('translate-x-full');
+    
+    // Mostrar mensaje de éxito
+    alert('¡Gracias por su compra! Su pedido ha sido procesado exitosamente.');
+}
+
+// Función para guardar pedidos en localStorage
+function guardarPedidosEnStorage() {
+    try {
+        localStorage.setItem('pedidosRealizados', JSON.stringify(pedidosRealizados));
+    } catch (error) {
+        console.error('Error al guardar pedidos:', error);
+    }
+}
+
+// Función para cargar pedidos desde localStorage
+function cargarPedidosDesdeStorage() {
+    try {
+        const data = localStorage.getItem('pedidosRealizados');
+        if (data) {
+            pedidosRealizados = JSON.parse(data);
+        }
+    } catch (error) {
+        console.error('Error al cargar pedidos:', error);
+        pedidosRealizados = [];
+    }
+}
+
 // Funciones del carrito
 function cargarCarritoDesdeStorage() {
-    const data = localStorage.getItem('carrito');
-    if (data) {
-        try {
+    try {
+        const data = localStorage.getItem('carrito');
+        if (data) {
             carrito = JSON.parse(data);
             renderizarCarrito();
-        } catch (error) {
-            console.error('Error al cargar carrito:', error);
-            carrito = [];
+        } else {
             actualizarContadorCarrito();
         }
-    } else {
+    } catch (error) {
+        console.error('Error al cargar carrito:', error);
+        carrito = [];
         actualizarContadorCarrito();
     }
 }
@@ -243,7 +400,6 @@ function filtrarPorCategoria(categoria) {
 
     document.getElementById('mis-pedidos')?.classList.add('hidden');
     document.getElementById('productos')?.classList.remove('hidden');
-
 
     // Actualizar título según la categoría
     const titulo = document.getElementById('titulo-productos');
@@ -421,42 +577,132 @@ function activarBotonesCarrito(productos) {
     });
 }
 
-// Inicializar cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', () => {
-    cargarCarritoDesdeStorage();
-    cargarProductos();
-});
-
+// Función actualizada para mostrar mis pedidos
 function mostrarMisPedidos() {
     const pedidosSection = document.getElementById('mis-pedidos');
     const productosSection = document.getElementById('productos');
     const pedidosLista = document.getElementById('lista-pedidos');
 
-    pedidosSection.classList.remove('hidden');
-    productosSection.classList.add('hidden');
-
-    if (!pedidosLista) return;
-
-    pedidosLista.innerHTML = ''; // Limpia contenido anterior
-
-    if (carrito.length === 0) {
-        pedidosLista.innerHTML = '<p class="text-gray-500">No has realizado ningún pedido aún.</p>';
+    if (!pedidosSection || !productosSection || !pedidosLista) {
+        console.error('No se encontraron los elementos necesarios para mostrar pedidos');
         return;
     }
 
-    carrito.forEach(prod => {
-        const div = document.createElement('div');
-        div.className = 'bg-white p-4 rounded shadow flex items-center gap-4';
+    pedidosSection.classList.remove('hidden');
+    productosSection.classList.add('hidden');
 
-        div.innerHTML = `
-      <img src="${prod.image}" alt="${prod.title}" class="w-16 h-16 object-contain rounded">
-      <div>
-        <h3 class="font-semibold text-lg">${prod.title}</h3>
-        <p class="text-sm text-gray-600">Cantidad: ${prod.cantidad}</p>
-        <p class="text-sm text-gray-600">Precio unitario: $${prod.price.toFixed(2)}</p>
-        <p class="text-sm font-bold text-red-600">Subtotal: $${(prod.price * prod.cantidad).toFixed(2)}</p>
-      </div>
-    `;
-        pedidosLista.appendChild(div);
+    pedidosLista.innerHTML = ''; // Limpia contenido anterior
+
+    if (pedidosRealizados.length === 0) {
+        pedidosLista.innerHTML = `
+            <div class="text-center py-8">
+                <i class="ph ph-shopping-bag text-6xl text-gray-300 mb-4"></i>
+                <p class="text-gray-500 text-lg">No has realizado ningún pedido aún.</p>
+                <p class="text-gray-400 text-sm mt-2">Cuando realices una compra, aparecerá aquí.</p>
+            </div>
+        `;
+        return;
+    }
+
+    // Mostrar pedidos realizados (ordenados por fecha más reciente)
+    pedidosRealizados.slice().reverse().forEach(pedido => {
+        const pedidoDiv = document.createElement('div');
+        pedidoDiv.className = 'bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500';
+
+        const productosHTML = pedido.productos.map(prod => `
+            <div class="flex items-center gap-3 py-2 border-b border-gray-100 last:border-b-0">
+                <img src="${prod.image}" alt="${prod.title}" class="w-12 h-12 object-contain rounded">
+                <div class="flex-1">
+                    <h4 class="font-medium text-sm">${prod.title}</h4>
+                    <p class="text-xs text-gray-600">Cantidad: ${prod.cantidad} | Precio: $${prod.price.toFixed(2)}</p>
+                </div>
+                <div class="text-right">
+                    <p class="font-semibold text-sm">$${(prod.price * prod.cantidad).toFixed(2)}</p>
+                </div>
+            </div>
+        `).join('');
+
+        pedidoDiv.innerHTML = `
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <h3 class="font-bold text-lg text-gray-800">Pedido #${pedido.id}</h3>
+                    <p class="text-sm text-gray-600">Fecha: ${pedido.fecha}</p>
+                    <span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full mt-1">
+                        ✓ Completado
+                    </span>
+                </div>
+                <div class="text-right">
+                    <p class="text-lg font-bold text-green-600">$${pedido.total.toFixed(2)}</p>
+                    <p class="text-xs text-gray-500">${pedido.productos.length} producto${pedido.productos.length !== 1 ? 's' : ''}</p>
+                </div>
+            </div>
+            <div class="space-y-2">
+                ${productosHTML}
+            </div>
+        `;
+
+        pedidosLista.appendChild(pedidoDiv);
     });
 }
+
+// Función para configurar el event listener del botón finalizar compra
+function configurarBotonFinalizarCompra() {
+    // Buscar el botón usando múltiples selectores
+    const selectors = [
+        'button:contains("Finalizar Compra")',
+        '.border-t button',
+        '#carrito .border-t button',
+        'button[class*="bg-red-600"][class*="w-full"]'
+    ];
+    
+    let finalizarCompraBtn = null;
+    
+    // Buscar por texto del botón
+    const botones = document.querySelectorAll('button');
+    botones.forEach(btn => {
+        if (btn.textContent.includes('Finalizar Compra')) {
+            finalizarCompraBtn = btn;
+        }
+    });
+    
+    // Si no se encontró, buscar en el carrito específicamente
+    if (!finalizarCompraBtn) {
+        const carritoDiv = document.getElementById('carrito');
+        if (carritoDiv) {
+            const botonesCarrito = carritoDiv.querySelectorAll('button');
+            botonesCarrito.forEach(btn => {
+                if (btn.textContent.includes('Finalizar Compra')) {
+                    finalizarCompraBtn = btn;
+                }
+            });
+        }
+    }
+    
+    if (finalizarCompraBtn) {
+        console.log('Botón Finalizar Compra encontrado:', finalizarCompraBtn);
+        // Remover listeners anteriores
+        finalizarCompraBtn.removeEventListener('click', abrirModalConfirmacion);
+        // Agregar nuevo listener
+        finalizarCompraBtn.addEventListener('click', abrirModalConfirmacion);
+    } else {
+        console.warn('No se pudo encontrar el botón Finalizar Compra');
+    }
+}
+
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM cargado, inicializando...');
+    
+    // Cargar datos
+    cargarCarritoDesdeStorage();
+    cargarPedidosDesdeStorage();
+    cargarProductos();
+    
+    // Configurar botón de finalizar compra con un pequeño delay
+    setTimeout(() => {
+        configurarBotonFinalizarCompra();
+    }, 100);
+    
+    console.log('Inicialización completada');
+    console.log('Pedidos realizados:', pedidosRealizados);
+});
