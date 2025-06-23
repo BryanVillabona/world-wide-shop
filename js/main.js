@@ -577,7 +577,7 @@ function activarBotonesCarrito(productos) {
     });
 }
 
-// Función actualizada para mostrar mis pedidos
+// Función mejorada para mostrar mis pedidos con acordeón
 function mostrarMisPedidos() {
     const pedidosSection = document.getElementById('mis-pedidos');
     const productosSection = document.getElementById('productos');
@@ -604,45 +604,251 @@ function mostrarMisPedidos() {
         return;
     }
 
-    // Mostrar pedidos realizados (ordenados por fecha más reciente)
-    pedidosRealizados.slice().reverse().forEach(pedido => {
+    // Agregar header con información general
+    const headerDiv = document.createElement('div');
+    headerDiv.className = 'bg-gradient-to-r from-blue-50 to-indigo-50 p-4 rounded-lg mb-6 border border-blue-100';
+    headerDiv.innerHTML = `
+        <div class="flex items-center justify-between">
+            <div>
+                <h3 class="text-lg font-semibold text-gray-800">Historial de Compras</h3>
+                <p class="text-sm text-gray-600">Total de pedidos realizados: ${pedidosRealizados.length}</p>
+            </div>
+            <div class="text-right">
+                <p class="text-sm text-gray-600">Total gastado:</p>
+                <p class="text-xl font-bold text-green-600">
+                    $${pedidosRealizados.reduce((sum, pedido) => sum + pedido.total, 0).toFixed(2)}
+                </p>
+            </div>
+        </div>
+        ${pedidosRealizados.length > 1 ? `
+        <div class="mt-3 pt-3 border-t border-blue-200">
+            <button onclick="confirmarLimpiarTodosPedidos()" 
+                    class="text-red-600 hover:text-red-800 text-sm font-medium flex items-center gap-2">
+                <i class="ph ph-trash text-base"></i>
+                Limpiar todo el historial
+            </button>
+        </div>
+        ` : ''}
+    `;
+    pedidosLista.appendChild(headerDiv);
+
+    // Mostrar pedidos realizados (ordenados por fecha más reciente) con acordeón
+    pedidosRealizados.slice().reverse().forEach((pedido, index) => {
+        const pedidoId = `pedido-${pedido.id}`;
         const pedidoDiv = document.createElement('div');
-        pedidoDiv.className = 'bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500';
+        pedidoDiv.className = 'bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden';
 
         const productosHTML = pedido.productos.map(prod => `
-            <div class="flex items-center gap-3 py-2 border-b border-gray-100 last:border-b-0">
-                <img src="${prod.image}" alt="${prod.title}" class="w-12 h-12 object-contain rounded">
-                <div class="flex-1">
-                    <h4 class="font-medium text-sm">${prod.title}</h4>
-                    <p class="text-xs text-gray-600">Cantidad: ${prod.cantidad} | Precio: $${prod.price.toFixed(2)}</p>
+            <div class="flex items-center gap-3 py-3 px-4 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors">
+                <img src="${prod.image}" alt="${prod.title}" class="w-16 h-16 object-contain rounded border">
+                <div class="flex-1 min-w-0">
+                    <h4 class="font-medium text-sm text-gray-800 line-clamp-2 mb-1">${prod.title}</h4>
+                    <div class="flex items-center gap-4 text-xs text-gray-600">
+                        <span class="flex items-center gap-1">
+                            <i class="ph ph-package text-sm"></i>
+                            Cantidad: ${prod.cantidad}
+                        </span>
+                        <span class="flex items-center gap-1">
+                            <i class="ph ph-currency-dollar text-sm"></i>
+                            Precio: $${prod.price.toFixed(2)}
+                        </span>
+                    </div>
                 </div>
                 <div class="text-right">
-                    <p class="font-semibold text-sm">$${(prod.price * prod.cantidad).toFixed(2)}</p>
+                    <p class="font-semibold text-sm text-gray-800">$${(prod.price * prod.cantidad).toFixed(2)}</p>
+                    <p class="text-xs text-gray-500">Subtotal</p>
                 </div>
             </div>
         `).join('');
 
         pedidoDiv.innerHTML = `
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <h3 class="font-bold text-lg text-gray-800">Pedido #${pedido.id}</h3>
-                    <p class="text-sm text-gray-600">Fecha: ${pedido.fecha}</p>
-                    <span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full mt-1">
-                        ✓ Completado
-                    </span>
-                </div>
-                <div class="text-right">
-                    <p class="text-lg font-bold text-green-600">$${pedido.total.toFixed(2)}</p>
-                    <p class="text-xs text-gray-500">${pedido.productos.length} producto${pedido.productos.length !== 1 ? 's' : ''}</p>
+            <!-- Header del acordeón -->
+            <div class="cursor-pointer hover:bg-gray-50 transition-colors" onclick="toggleAcordeon('${pedidoId}')">
+                <div class="flex items-center justify-between p-4">
+                    <div class="flex items-center gap-4">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">
+                                <i class="ph ph-check-circle text-green-600 text-xl"></i>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-lg text-gray-800">Pedido #${pedido.id}</h3>
+                            <div class="flex items-center gap-4 text-sm text-gray-600 mt-1">
+                                <span class="flex items-center gap-1">
+                                    <i class="ph ph-calendar text-sm"></i>
+                                    ${pedido.fecha}
+                                </span>
+                                <span class="flex items-center gap-1">
+                                    <i class="ph ph-package text-sm"></i>
+                                    ${pedido.productos.length} producto${pedido.productos.length !== 1 ? 's' : ''}
+                                </span>
+                            </div>
+                            <span class="inline-block bg-green-100 text-green-800 text-xs px-2 py-1 rounded-full mt-2">
+                                ✓ Completado
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <div class="text-right">
+                            <p class="text-xl font-bold text-green-600">$${pedido.total.toFixed(2)}</p>
+                            <p class="text-xs text-gray-500">Total</p>
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <button onclick="event.stopPropagation(); confirmarEliminarPedido(${pedido.id})" 
+                                    class="text-red-600 hover:text-red-800 hover:bg-red-50 p-2 rounded-full transition-colors"
+                                    title="Eliminar pedido">
+                                <i class="ph ph-trash text-lg"></i>
+                            </button>
+                            <i id="icono-${pedidoId}" class="ph ph-caret-down text-gray-400 text-xl transition-transform duration-200"></i>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="space-y-2">
-                ${productosHTML}
+
+            <!-- Contenido del acordeón -->
+            <div id="contenido-${pedidoId}" class="acordeon-contenido hidden">
+                <div class="border-t border-gray-200">
+                    <div class="p-4 bg-gray-50">
+                        <h4 class="font-semibold text-gray-800 mb-3 flex items-center gap-2">
+                            <i class="ph ph-list text-lg"></i>
+                            Productos del pedido
+                        </h4>
+                        <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                            ${productosHTML}
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-gray-300 bg-gray-100 rounded-lg p-3">
+                            <div class="flex justify-between items-center">
+                                <span class="font-semibold text-gray-700">Total del pedido:</span>
+                                <span class="text-xl font-bold text-green-600">$${pedido.total.toFixed(2)}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         `;
 
         pedidosLista.appendChild(pedidoDiv);
     });
+}
+
+// Función para alternar el acordeón
+function toggleAcordeon(pedidoId) {
+    const contenido = document.getElementById(`contenido-${pedidoId}`);
+    const icono = document.getElementById(`icono-${pedidoId}`);
+    
+    if (!contenido || !icono) return;
+
+    const isHidden = contenido.classList.contains('hidden');
+    
+    // Cerrar todos los acordeones abiertos
+    document.querySelectorAll('.acordeon-contenido').forEach(el => {
+        el.classList.add('hidden');
+    });
+    document.querySelectorAll('[id^="icono-pedido-"]').forEach(el => {
+        el.classList.remove('rotate-180');
+    });
+    
+    if (isHidden) {
+        // Abrir el acordeón seleccionado
+        contenido.classList.remove('hidden');
+        icono.classList.add('rotate-180');
+    }
+}
+
+// Función para confirmar eliminación de un pedido
+function confirmarEliminarPedido(pedidoId) {
+    const pedido = pedidosRealizados.find(p => p.id === pedidoId);
+    if (!pedido) {
+        console.error('Pedido no encontrado:', pedidoId);
+        return;
+    }
+
+    const confirmar = confirm(
+        `¿Estás seguro de que deseas eliminar el pedido #${pedidoId}?\n\n` +
+        `Fecha: ${pedido.fecha}\n` +
+        `Total: $${pedido.total.toFixed(2)}\n` +
+        `Productos: ${pedido.productos.length}\n\n` +
+        `Esta acción no se puede deshacer.`
+    );
+
+    if (confirmar) {
+        eliminarPedido(pedidoId);
+    }
+}
+
+// Función para eliminar un pedido específico
+function eliminarPedido(pedidoId) {
+    const indice = pedidosRealizados.findIndex(p => p.id === pedidoId);
+    
+    if (indice === -1) {
+        console.error('Pedido no encontrado para eliminar:', pedidoId);
+        return;
+    }
+
+    // Eliminar el pedido del array
+    pedidosRealizados.splice(indice, 1);
+    
+    // Guardar cambios en localStorage
+    guardarPedidosEnStorage();
+    
+    // Actualizar la vista
+    mostrarMisPedidos();
+    
+    // Mostrar mensaje de confirmación
+    alert('El pedido ha sido eliminado exitosamente.');
+}
+
+// Función para confirmar limpieza de todos los pedidos
+function confirmarLimpiarTodosPedidos() {
+    const totalPedidos = pedidosRealizados.length;
+    const totalGastado = pedidosRealizados.reduce((sum, pedido) => sum + pedido.total, 0);
+
+    const confirmar = confirm(
+        `¿Estás seguro de que deseas eliminar TODO el historial de pedidos?\n\n` +
+        `Se eliminarán ${totalPedidos} pedidos\n` +
+        `Total gastado: $${totalGastado.toFixed(2)}\n\n` +
+        `Esta acción no se puede deshacer.`
+    );
+
+    if (confirmar) {
+        limpiarTodosPedidos();
+    }
+}
+
+// Función para limpiar todos los pedidos
+function limpiarTodosPedidos() {
+    pedidosRealizados = [];
+    guardarPedidosEnStorage();
+    mostrarMisPedidos();
+    alert('Todo el historial de pedidos ha sido eliminado exitosamente.');
+}
+
+// Función para exportar/mostrar resumen de pedidos (funcionalidad extra)
+function mostrarResumenPedidos() {
+    if (pedidosRealizados.length === 0) {
+        alert('No hay pedidos para mostrar resumen.');
+        return;
+    }
+
+    const totalPedidos = pedidosRealizados.length;
+    const totalGastado = pedidosRealizados.reduce((sum, pedido) => sum + pedido.total, 0);
+    const totalProductos = pedidosRealizados.reduce((sum, pedido) => 
+        sum + pedido.productos.reduce((prodSum, prod) => prodSum + prod.cantidad, 0), 0);
+
+    const primerPedido = pedidosRealizados.reduce((min, pedido) => 
+        new Date(pedido.fecha) < new Date(min.fecha) ? pedido : min);
+    const ultimoPedido = pedidosRealizados.reduce((max, pedido) => 
+        new Date(pedido.fecha) > new Date(max.fecha) ? pedido : max);
+
+    alert(
+        `📊 RESUMEN DE COMPRAS 📊\n\n` +
+        `🛒 Total de pedidos: ${totalPedidos}\n` +
+        `💰 Total gastado: $${totalGastado.toFixed(2)}\n` +
+        `📦 Total de productos: ${totalProductos}\n` +
+        `💸 Promedio por pedido: $${(totalGastado / totalPedidos).toFixed(2)}\n\n` +
+        `📅 Primer pedido: ${primerPedido.fecha}\n` +
+        `📅 Último pedido: ${ultimoPedido.fecha}`
+    );
 }
 
 // Función para configurar el event listener del botón finalizar compra

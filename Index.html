@@ -5,8 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>World Wide Shop</title>
+  <link rel="stylesheet" href="./css/estilos.css">
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://unpkg.com/@phosphor-icons/web"></script> <!-- Íconos Phosphor -->
 </head>
 
 <body class="bg-gray-300">
@@ -57,8 +57,10 @@
           </button>
           <div
             class="absolute left-0 mt-2 w-40 bg-white text-black rounded-md shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition-all duration-200 invisible group-hover:visible z-50">
-            <a href="#" onclick="filtrarPorCategoria('men\'s clothing')" class="block px-4 py-2 hover:bg-gray-200">Ropa Hombre</a>
-            <a href="#" onclick="filtrarPorCategoria('women\'s clothing')" class="block px-4 py-2 hover:bg-gray-200">Ropa Mujer</a>
+            <a href="#" onclick="filtrarPorCategoria('men\'s clothing')" class="block px-4 py-2 hover:bg-gray-200">Ropa
+              Hombre</a>
+            <a href="#" onclick="filtrarPorCategoria('women\'s clothing')"
+              class="block px-4 py-2 hover:bg-gray-200">Ropa Mujer</a>
           </div>
         </div>
 
@@ -74,7 +76,7 @@
   <div id="modal-login" class="fixed inset-0 z-50 hidden items-center justify-center">
     <!-- Overlay -->
     <div id="overlay-modal" class="absolute inset-0 bg-black bg-opacity-50"></div>
-    
+
     <!-- Modal Container -->
     <div class="relative bg-white rounded-lg shadow-2xl w-full max-w-md mx-4 overflow-hidden">
       <!-- Header -->
@@ -87,12 +89,12 @@
 
       <!-- Tabs -->
       <div class="flex border-b">
-        <button id="login-tab" onclick="alternarFormulario('login')" 
-                class="flex-1 py-3 px-4 text-center font-medium border-b-2 border-red-600 text-red-600">
+        <button id="login-tab" onclick="alternarFormulario('login')"
+          class="flex-1 py-3 px-4 text-center font-medium border-b-2 border-red-600 text-red-600">
           Iniciar Sesión
         </button>
-        <button id="register-tab" onclick="alternarFormulario('register')" 
-                class="flex-1 py-3 px-4 text-center font-medium text-gray-600 hover:text-gray-800">
+        <button id="register-tab" onclick="alternarFormulario('register')"
+          class="flex-1 py-3 px-4 text-center font-medium text-gray-600 hover:text-gray-800">
           Registrarse
         </button>
       </div>
@@ -105,8 +107,8 @@
               Correo Electrónico
             </label>
             <input id="email-login" type="email" required
-                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                   placeholder="ejemplo@correo.com">
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              placeholder="ejemplo@correo.com">
           </div>
 
           <div class="mb-4">
@@ -114,8 +116,8 @@
               Contraseña
             </label>
             <input id="password-login" type="password" required
-                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                   placeholder="••••••••">
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              placeholder="••••••••">
           </div>
 
           <div class="flex items-center justify-between mb-6">
@@ -126,21 +128,21 @@
             <a href="#" class="text-sm text-red-600 hover:text-red-700">¿Olvidaste tu contraseña?</a>
           </div>
 
-          <button type="submit" 
-                  class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition duration-200">
+          <button type="submit"
+            class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition duration-200">
             Iniciar Sesión
           </button>
 
           <div class="mt-6 text-center">
             <p class="text-sm text-gray-600 mb-4">O continúa con</p>
             <div class="space-y-2">
-              <button type="button" 
-                      class="w-full flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-200">
+              <button type="button"
+                class="w-full flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-200">
                 <i class="ph ph-facebook-logo text-lg"></i>
                 Facebook
               </button>
-              <button type="button" 
-                      class="w-full flex items-center justify-center gap-3 bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-md border transition duration-200">
+              <button type="button"
+                class="w-full flex items-center justify-center gap-3 bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-md border transition duration-200">
                 <i class="ph ph-google-logo text-lg"></i>
                 Google
               </button>
@@ -157,8 +159,8 @@
               Nombre Completo
             </label>
             <input id="nombre-registro" type="text" required
-                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                   placeholder="Tu nombre completo">
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              placeholder="Tu nombre completo">
           </div>
 
           <div class="mb-4">
@@ -166,8 +168,8 @@
               Correo Electrónico
             </label>
             <input id="email-registro" type="email" required
-                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                   placeholder="ejemplo@correo.com">
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              placeholder="ejemplo@correo.com">
           </div>
 
           <div class="mb-4">
@@ -175,8 +177,8 @@
               Contraseña
             </label>
             <input id="password-registro" type="password" required
-                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                   placeholder="••••••••">
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              placeholder="••••••••">
           </div>
 
           <div class="mb-4">
@@ -184,35 +186,35 @@
               Confirmar Contraseña
             </label>
             <input id="confirmar-password" type="password" required
-                   class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-                   placeholder="••••••••">
+              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
+              placeholder="••••••••">
           </div>
 
           <div class="mb-6">
             <label class="flex items-start">
               <input type="checkbox" required class="mt-1 rounded border-gray-300 text-red-600 focus:ring-red-500">
               <span class="ml-2 text-sm text-gray-600">
-                Acepto los <a href="#" class="text-red-600 hover:text-red-700">términos y condiciones</a> 
+                Acepto los <a href="#" class="text-red-600 hover:text-red-700">términos y condiciones</a>
                 y la <a href="#" class="text-red-600 hover:text-red-700">política de privacidad</a>
               </span>
             </label>
           </div>
 
-          <button type="submit" 
-                  class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition duration-200">
+          <button type="submit"
+            class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition duration-200">
             Crear Cuenta
           </button>
 
           <div class="mt-6 text-center">
             <p class="text-sm text-gray-600 mb-4">O regístrate con</p>
             <div class="space-y-2">
-              <button type="button" 
-                      class="w-full flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-200">
+              <button type="button"
+                class="w-full flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-200">
                 <i class="ph ph-facebook-logo text-lg"></i>
                 Facebook
               </button>
-              <button type="button" 
-                      class="w-full flex items-center justify-center gap-3 bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-md border transition duration-200">
+              <button type="button"
+                class="w-full flex items-center justify-center gap-3 bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-md border transition duration-200">
                 <i class="ph ph-google-logo text-lg"></i>
                 Google
               </button>
@@ -257,19 +259,24 @@
     <div class="flex justify-between items-center mb-6">
       <h2 id="titulo-productos" class="text-2xl font-bold">Nuestros Productos</h2>
       <div class="flex gap-2">
-        <button onclick="filtrarPorCategoria('todos')" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md text-sm">
+        <button onclick="filtrarPorCategoria('todos')"
+          class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md text-sm">
           Todos
         </button>
-        <button onclick="filtrarPorCategoria('electronics')" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md text-sm">
+        <button onclick="filtrarPorCategoria('electronics')"
+          class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md text-sm">
           Electrónica
         </button>
-        <button onclick="filtrarPorCategoria('jewelery')" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md text-sm">
+        <button onclick="filtrarPorCategoria('jewelery')"
+          class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md text-sm">
           Joyería
         </button>
-        <button onclick="filtrarPorCategoria('men\'s clothing')" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md text-sm">
+        <button onclick="filtrarPorCategoria('men\'s clothing')"
+          class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md text-sm">
           Hombre
         </button>
-        <button onclick="filtrarPorCategoria('women\'s clothing')" class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md text-sm">
+        <button onclick="filtrarPorCategoria('women\'s clothing')"
+          class="px-3 py-1 bg-gray-200 hover:bg-gray-300 rounded-md text-sm">
           Mujer
         </button>
       </div>
@@ -280,11 +287,11 @@
   </section>
 
   <section id="mis-pedidos" class="max-w-7xl mx-auto px-4 py-8 hidden">
-  <h2 class="text-2xl font-bold mb-4">Mis Pedidos</h2>
-  <div id="lista-pedidos" class="space-y-4">
-    <!-- Se insertan los pedidos desde JS -->
-  </div>
-</section>
+    <h2 class="text-2xl font-bold mb-4">Mis Pedidos</h2>
+    <div id="lista-pedidos" class="space-y-4">
+      <!-- Se insertan los pedidos desde JS -->
+    </div>
+  </section>
 
   <!-- CARRITO LATERAL -->
   <aside id="carrito"
@@ -314,7 +321,7 @@
     <div>02</div>
     <div>03</div>
   </div>
-
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <script src="./js/main.js"></script>
 </body>
 
