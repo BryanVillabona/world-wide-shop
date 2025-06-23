@@ -187,7 +187,7 @@ function crearModalConfirmacion() {
                     <p class="text-gray-700 mb-4">¿Estás seguro de que deseas finalizar tu compra?</p>
                     <div class="bg-gray-50 p-4 rounded-lg">
                         <p class="text-sm text-gray-600 mb-2">Resumen de tu pedido:</p>
-                        <p class="text-lg font-bold text-red-600" id="total-confirmacion">COP 0.00</p>
+                        <p class="text-lg font-bold text-red-600" id="total-confirmacion">USD 0.00</p>
                         <p class="text-sm text-gray-500" id="items-confirmacion">0 productos</p>
                     </div>
                 </div>
@@ -245,7 +245,7 @@ function abrirModalConfirmacion() {
     const total = calcularTotal();
     const totalItems = carrito.reduce((sum, prod) => sum + prod.cantidad, 0);
     
-    totalConfirmacion.textContent = `COP ${total}`;
+    totalConfirmacion.textContent = `USD ${total}`;
     itemsConfirmacion.textContent = `${totalItems} producto${totalItems !== 1 ? 's' : ''}`;
     
     modal.classList.remove('hidden');
@@ -363,7 +363,7 @@ function renderizarCarrito() {
 
     if (carrito.length === 0) {
         contenedor.innerHTML = '<p class="text-gray-500">Tu carrito está vacío.</p>';
-        totalTexto.textContent = 'COP 0.00';
+        totalTexto.textContent = 'USD 0.00';
         actualizarContadorCarrito();
         return;
     }
@@ -384,7 +384,7 @@ function renderizarCarrito() {
         contenedor.appendChild(div);
     });
 
-    totalTexto.textContent = `COP ${calcularTotal()}`;
+    totalTexto.textContent = `USD ${calcularTotal()}`;
     actualizarContadorCarrito();
 }
 
@@ -841,13 +841,13 @@ function mostrarResumenPedidos() {
         new Date(pedido.fecha) > new Date(max.fecha) ? pedido : max);
 
     alert(
-        `📊 RESUMEN DE COMPRAS 📊\n\n` +
-        `🛒 Total de pedidos: ${totalPedidos}\n` +
-        `💰 Total gastado: $${totalGastado.toFixed(2)}\n` +
-        `📦 Total de productos: ${totalProductos}\n` +
-        `💸 Promedio por pedido: $${(totalGastado / totalPedidos).toFixed(2)}\n\n` +
-        `📅 Primer pedido: ${primerPedido.fecha}\n` +
-        `📅 Último pedido: ${ultimoPedido.fecha}`
+        `RESUMEN DE COMPRAS 📊\n\n` +
+        `Total de pedidos: ${totalPedidos}\n` +
+        `Total gastado: $${totalGastado.toFixed(2)}\n` +
+        `Total de productos: ${totalProductos}\n` +
+        `Promedio por pedido: $${(totalGastado / totalPedidos).toFixed(2)}\n\n` +
+        `Primer pedido: ${primerPedido.fecha}\n` +
+        `Último pedido: ${ultimoPedido.fecha}`
     );
 }
 
