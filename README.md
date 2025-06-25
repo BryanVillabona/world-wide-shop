@@ -9,6 +9,8 @@ World Wide Shop es un proyecto de comercio electrónico interactivo y responsivo
 
 El objetivo principal de este proyecto fue aplicar conocimientos de desarrollo frontend utilizando HTML, CSS (con Tailwind CSS) y JavaScript puro, enfocándose en la interactividad, la gestión del estado del usuario y el manejo de datos (a través de la API de Fake Store y `localStorage`).
 
+Para visualizar el aplicativo web da click [aqui](https://bryanvillabona.github.io/world-wide-shop/)
+
 ## Características Principales
 
 * **Carrusel de Productos Dinámico**: Un carrusel de imágenes en la página de inicio que rota automáticamente y permite navegación manual.
@@ -51,15 +53,15 @@ El diseño de la interfaz de usuario de World Wide Shop fue creado en Figma, sig
 
 **Pantalla principal:**
 
-- ![Diseño Figma - Pantalla Principal](./img/pantalla_principal.png)
+![Diseño Figma - Pantalla Principal](./img/pantalla_principal.png)
 
 **Carrito de compras:**
 
-- ![Diseño Figma - Carrito de compras](./img/carrito_compras.png)
+![Diseño Figma - Carrito de compras](./img/carrito_compras.png)
 
 **Historial de pedidos:**
 
-- ![Diseño Figma - Historial de pedidos](./img/historial_pedidos.png)
+![Diseño Figma - Historial de pedidos](./img/historial_pedidos.png)
 
 **Link de Figma**: [Ver diseño completo en Figma](https://www.figma.com/proto/q08CzzxRGp3ebidQS9mjQd/world-wide-shop?node-id=0-1&t=88xDhI0gt7JRqeHR-1)
 
