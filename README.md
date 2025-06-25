@@ -50,13 +50,16 @@ El objetivo principal de este proyecto fue aplicar conocimientos de desarrollo f
 El diseño de la interfaz de usuario de World Wide Shop fue creado en Figma, siguiendo principios de diseño moderno y usabilidad. Aquí se muestran algunos de los wireframes y mockups clave que guiaron el desarrollo:
 
 **Pantalla principal:**
-![Diseño Figma - Pantalla Principal](./img/pantalla_principal.png)
+
+- ![Diseño Figma - Pantalla Principal](./img/pantalla_principal.png)
 
 **Carrito de compras:**
-![Diseño Figma - Carrito de compras](./img/carrito_compras.png)
+
+- ![Diseño Figma - Carrito de compras](./img/carrito_compras.png)
 
 **Historial de pedidos:**
-![Diseño Figma - Historial de pedidos](./img/historial_pedidos.png)
+
+- ![Diseño Figma - Historial de pedidos](./img/historial_pedidos.png)
 
 **Link de Figma**: [Ver diseño completo en Figma](https://www.figma.com/proto/q08CzzxRGp3ebidQS9mjQd/world-wide-shop?node-id=0-1&t=88xDhI0gt7JRqeHR-1)
 
