@@ -1,8 +1,8 @@
-# 📝 Análisis del Proyecto: World Wide Shop
+# Análisis del Proyecto: World Wide Shop
 
 Este documento detalla las decisiones clave tomadas en el diseño de la interfaz y experiencia de usuario (UI/UX), así como la estructura de datos implementada para la aplicación web "World Wide Shop".
 
-## 🎨 Decisiones de Diseño de Interfaz y Experiencia de Usuario (UI/UX)
+## Decisiones de Diseño de Interfaz y Experiencia de Usuario (UI/UX)
 
 El diseño de World Wide Shop se centró en la usabilidad, la claridad visual y una experiencia de compra fluida y moderna, utilizando **Tailwind CSS** para un desarrollo ágil y responsivo.
 
@@ -46,7 +46,7 @@ El diseño de World Wide Shop se centró en la usabilidad, la claridad visual y 
 * **Tipografía y Espaciado**: Se presta atención a la legibilidad de la tipografía y a un espaciado adecuado entre los elementos (`gap-`, `py-`, `px-` en Tailwind) para reducir el desorden visual y mejorar la legibilidad.
 * **Transiciones y Animaciones**: Se aplican transiciones suaves (`transition-colors`, `transition-transform`) en elementos interactivos como botones y enlaces para proporcionar una respuesta visual agradable al usuario.
 
-## 📊 Estructura de Datos
+## Estructura de Datos
 
 La aplicación gestiona los datos de los productos, el carrito de compras, los usuarios y el historial de pedidos utilizando JavaScript y la persistencia en `localStorage`.
 
