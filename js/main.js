@@ -4,6 +4,32 @@ const next = document.getElementById('nextBtn');
 let current = 0;
 let interval;
 
+function mostrarMensaje(texto, tipo = 'info', duracion = 2000) {
+  const mensajeDiv = document.getElementById('mensaje-error');
+  if (!mensajeDiv) return;
+
+  mensajeDiv.textContent = texto;
+  mensajeDiv.className = 'text-center py-2 text-sm font-medium';
+
+  if (tipo === 'error') {
+    mensajeDiv.classList.add('bg-red-100', 'text-red-700', 'border', 'border-red-300');
+  } else if (tipo === 'exito') {
+    mensajeDiv.classList.add('bg-green-100', 'text-green-700', 'border', 'border-green-300');
+  } else {
+    mensajeDiv.classList.add('bg-blue-100', 'text-blue-700', 'border', 'border-blue-300');
+  }
+
+  mensajeDiv.classList.remove('hidden');
+
+  if (duracion > 0) {
+    setTimeout(() => {
+      mensajeDiv.classList.add('hidden');
+    }, duracion);
+  }
+}
+
+
+
 // Variables globales para productos y filtros
 let todosLosProductos = [];
 let categoriaActiva = 'todos';
@@ -392,10 +418,13 @@ function cargarCarritoDesdeStorage() {
 function guardarCarritoEnStorage() {
     try {
         localStorage.setItem('carrito', JSON.stringify(carrito));
+        mostrarMensaje('Carrito guardado.', 'exito', 2000);
     } catch (error) {
         console.error('Error al guardar carrito:', error);
+        mostrarMensaje('Error al guardar el carrito.', 'error');
     }
 }
+
 
 function calcularTotal() {
     return carrito.reduce((total, prod) => total + prod.price * prod.cantidad, 0).toFixed(2);
@@ -453,40 +482,38 @@ function eliminarDelCarrito(id) {
 
 // Función para filtrar productos por categoría
 function filtrarPorCategoria(categoria) {
-    categoriaActiva = categoria;
+  categoriaActiva = categoria;
 
-    document.getElementById('mis-pedidos')?.classList.add('hidden');
-    document.getElementById('productos')?.classList.remove('hidden');
+  document.getElementById('mis-pedidos')?.classList.add('hidden');
+  document.getElementById('productos')?.classList.remove('hidden');
 
-    // Actualizar título según la categoría
-    const titulo = document.getElementById('titulo-productos');
-    const titulos = {
-        'todos': 'Productos Destacados',
-        'electronics': 'Productos de Electrónica',
-        'jewelery': 'Productos de Joyería',
-        "men's clothing": 'Ropa para Hombre',
-        "women's clothing": 'Ropa para Mujer',
-        'destacados': 'Productos Destacados (4+ Estrellas)'
-    };
+  // Mostrar mensaje de carga
+  mostrarMensaje('Cargando productos...', 'info', 1500); // se borra en 1.5 segundos
 
-    if (document.getElementById('input-busqueda')) {
-        document.getElementById('input-busqueda').value = '';
-    }
+  const titulo = document.getElementById('titulo-productos');
+  const titulos = {
+    'todos': 'Productos Destacados',
+    'electronics': 'Productos de Electrónica',
+    'jewelery': 'Productos de Joyería',
+    "men's clothing": 'Ropa para Hombre',
+    "women's clothing": 'Ropa para Mujer',
+    'destacados': 'Productos Destacados (4+ Estrellas)'
+  };
 
+  if (document.getElementById('input-busqueda')) {
+    document.getElementById('input-busqueda').value = '';
+  }
 
-    if (titulo) {
-        titulo.textContent = titulos[categoria] || 'Productos Destacados';
-    }
+  if (titulo) {
+    titulo.textContent = titulos[categoria] || 'Productos Destacados';
+  }
 
-    // Filtrar y mostrar productos
+  // Simula un retardo de carga antes de mostrar
+  setTimeout(() => {
     mostrarProductos(todosLosProductos, categoria);
-
-    // Prevenir navegación del enlace
-    if (event) {
-        event.preventDefault();
-    }
-    return false;
+  }, 500); // retardo opcional
 }
+
 
 // Función para mostrar productos destacados (4+ estrellas)
 function mostrarProductosDestacados() {
@@ -576,24 +603,25 @@ function mostrarProductos(productos, categoria = 'todos') {
 
 // Función para cargar productos desde la API
 async function cargarProductos() {
+    const contenedor = document.getElementById('lista-productos');
     try {
+        mostrarMensaje('Cargando productos...', 'info', 2000);
         const res = await fetch('https://fakestoreapi.com/products');
+        if (!res.ok) throw new Error('Respuesta inválida del servidor');
+
         const productos = await res.json();
-
-        // Guardar todos los productos para filtrado
         todosLosProductos = productos;
-
-        // Mostrar productos iniciales
         mostrarProductos(productos, categoriaActiva);
-
+        mostrarMensaje('Productos cargados exitosamente.', 'exito', 3000);
     } catch (error) {
         console.error('Error al cargar productos:', error);
-        const contenedor = document.getElementById('lista-productos');
         if (contenedor) {
             contenedor.innerHTML = `<p class="text-red-500 col-span-full text-center">Error al cargar los productos. Por favor, recarga la página.</p>`;
         }
+        mostrarMensaje('Error al cargar productos. Inténtalo más tarde.', 'error');
     }
 }
+
 
 function activarBotonesCarrito(productos) {
     const botones = document.querySelectorAll('.btn-carrito');
