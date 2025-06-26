@@ -28,12 +28,10 @@ function mostrarMensaje(texto, tipo = 'info', duracion = 2000) {
   }
 }
 
-
-
 // Variables globales para productos y filtros
 let todosLosProductos = [];
 let categoriaActiva = 'todos';
-let pedidosRealizados = []; // Nueva variable para almacenar pedidos realizados
+let pedidosRealizados = [];
 
 function showSlide(index) {
     items.forEach((item, i) => {
@@ -71,7 +69,7 @@ function resetInterval() {
     interval = setInterval(nextSlide, 5000);
 }
 
-// Iniciar carrusel automático solo si hay elementos
+// Para iniciar carrusel automático
 if (items.length > 0) {
     interval = setInterval(nextSlide, 5000);
 }
@@ -142,7 +140,6 @@ function manejarLogin(event) {
     }
 }
 
-
 function actualizarEstadoSesion() {
     const cuentaTexto = cuentaBoton?.querySelector('span');
     const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
@@ -165,8 +162,6 @@ function actualizarEstadoSesion() {
         };
     }
 }
-
-
 
 // Función para alternar entre login y registro
 function alternarFormulario(tipo) {
@@ -225,8 +220,7 @@ function manejarRegistro(event) {
     }
 }
 
-
-// Nueva función para crear el modal de confirmación de compra
+//función para crear el modal de confirmación de compra
 function crearModalConfirmacion() {
     // Verificar si el modal ya existe
     if (document.getElementById('modal-confirmacion')) {
@@ -362,8 +356,6 @@ function confirmarCompra() {
     alert('¡Gracias por tu compra! Tu pedido ha sido guardado.');
 }
 
-
-
 // Función para guardar pedidos en localStorage
 function guardarPedidosEnStorage() {
     try {
@@ -424,7 +416,6 @@ function guardarCarritoEnStorage() {
         mostrarMensaje('Error al guardar el carrito.', 'error');
     }
 }
-
 
 function calcularTotal() {
     return carrito.reduce((total, prod) => total + prod.price * prod.cantidad, 0).toFixed(2);
@@ -488,7 +479,7 @@ function filtrarPorCategoria(categoria) {
   document.getElementById('productos')?.classList.remove('hidden');
 
   // Mostrar mensaje de carga
-  mostrarMensaje('Cargando productos...', 'info', 1500); // se borra en 1.5 segundos
+  mostrarMensaje('Cargando productos...', 'info', 1500);
 
   const titulo = document.getElementById('titulo-productos');
   const titulos = {
@@ -508,14 +499,14 @@ function filtrarPorCategoria(categoria) {
     titulo.textContent = titulos[categoria] || 'Productos Destacados';
   }
 
-  // Simula un retardo de carga antes de mostrar
+  // Simular un retardo de carga antes de mostrar
   setTimeout(() => {
     mostrarProductos(todosLosProductos, categoria);
-  }, 500); // retardo opcional
+  }, 500);
 }
 
 
-// Función para mostrar productos destacados (4+ estrellas)
+// Función para mostrar productos destacados
 function mostrarProductosDestacados() {
     categoriaActiva = 'destacados';
     filtrarPorCategoria('destacados');
@@ -534,7 +525,7 @@ function mostrarProductos(productos, categoria = 'todos') {
     if (categoria === 'todos') {
         productosFiltrados = productos;
     } else if (categoria === 'destacados') {
-        // Filtrar productos con rating >= 4.0
+        // Filtrar productos con rating mayor o igual a 4
         productosFiltrados = productos.filter(producto => producto.rating.rate >= 4.0);
     } else {
         productosFiltrados = productos.filter(producto => producto.category === categoria);
@@ -622,7 +613,6 @@ async function cargarProductos() {
     }
 }
 
-
 function activarBotonesCarrito(productos) {
     const botones = document.querySelectorAll('.btn-carrito');
     botones.forEach(boton => {
@@ -656,7 +646,6 @@ function activarBotonesCarrito(productos) {
             guardarCarritoEnStorage();
             renderizarCarrito();
 
-            // Mostrar feedback visual
             nuevoBoton.textContent = '¡Agregado!';
             nuevoBoton.style.backgroundColor = '#10b981';
             setTimeout(() => {
@@ -681,7 +670,7 @@ function mostrarMisPedidos() {
     pedidosSection.classList.remove('hidden');
     productosSection.classList.add('hidden');
 
-    pedidosLista.innerHTML = ''; // Limpia contenido anterior
+    pedidosLista.innerHTML = '';
 
     if (pedidosRealizados.length === 0) {
         pedidosLista.innerHTML = `
@@ -913,37 +902,8 @@ function limpiarTodosPedidos() {
     alert('Todo el historial de pedidos ha sido eliminado exitosamente.');
 }
 
-// Función para exportar/mostrar resumen de pedidos (funcionalidad extra)
-function mostrarResumenPedidos() {
-    if (pedidosRealizados.length === 0) {
-        alert('No hay pedidos para mostrar resumen.');
-        return;
-    }
-
-    const totalPedidos = pedidosRealizados.length;
-    const totalGastado = pedidosRealizados.reduce((sum, pedido) => sum + pedido.total, 0);
-    const totalProductos = pedidosRealizados.reduce((sum, pedido) =>
-        sum + pedido.productos.reduce((prodSum, prod) => prodSum + prod.cantidad, 0), 0);
-
-    const primerPedido = pedidosRealizados.reduce((min, pedido) =>
-        new Date(pedido.fecha) < new Date(min.fecha) ? pedido : min);
-    const ultimoPedido = pedidosRealizados.reduce((max, pedido) =>
-        new Date(pedido.fecha) > new Date(max.fecha) ? pedido : max);
-
-    alert(
-        `RESUMEN DE COMPRAS 📊\n\n` +
-        `Total de pedidos: ${totalPedidos}\n` +
-        `Total gastado: $${totalGastado.toFixed(2)}\n` +
-        `Total de productos: ${totalProductos}\n` +
-        `Promedio por pedido: $${(totalGastado / totalPedidos).toFixed(2)}\n\n` +
-        `Primer pedido: ${primerPedido.fecha}\n` +
-        `Último pedido: ${ultimoPedido.fecha}`
-    );
-}
-
 // Función para configurar el event listener del botón finalizar compra
 function configurarBotonFinalizarCompra() {
-    // Buscar el botón usando múltiples selectores
     const selectors = [
         'button:contains("Finalizar Compra")',
         '.border-t button',
