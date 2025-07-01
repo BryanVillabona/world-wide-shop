@@ -33,7 +33,7 @@
           <i class="ph ph-user-circle text-xl"></i>
           <span class="text-sm hidden sm:inline">Cuenta</span>
         </a>
-        
+
         <a href="#" class="flex items-center gap-1 hover:text-yellow-400 relative">
           <i class="ph ph-shopping-cart text-xl"></i>
           <span class="text-sm hidden sm:inline">Carrito</span>
@@ -63,11 +63,14 @@
 
         <a href="#" onclick="filtrarPorCategoria('jewelery')" class="hover:text-yellow-400">Joyería</a>
         <a href="#" onclick="mostrarProductosDestacados()" class="hover:text-yellow-400">Destacados</a>
-        <a href="#" onclick="mostrarMisPedidos()" class="hover:text-yellow-400">Mis Pedidos</a>
+        <span id="link-mis-pedidos" class="hidden">
+          <a href="#" onclick="mostrarMisPedidos()" class="hover:text-yellow-400">Mis Pedidos</a>
+        </span>
+
       </div>
     </nav>
   </header>
-  
+
   <div id="modal-login" class="fixed inset-0 z-50 hidden items-center justify-center">
 
     <div id="overlay-modal" class="absolute inset-0 bg-black bg-opacity-50"></div>
@@ -246,10 +249,10 @@
   </section>
 
   <section id="productos" class="max-w-7xl mx-auto px-4 py-8">
-    
+
     <div class="flex justify-between items-center mb-6">
       <h2 id="titulo-productos" class="text-2xl font-bold">Nuestros Productos</h2>
-      </div>
+    </div>
 
     <div class="flex items-center justify-end mb-4">
       <label for="ordenar-productos" class="mr-2 text-sm font-medium">Ordenar por:</label>

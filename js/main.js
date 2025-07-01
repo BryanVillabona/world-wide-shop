@@ -134,7 +134,7 @@ function manejarLogin(event) {
         alert(`Bienvenido, ${usuario.nombre}`);
         cerrarModalLogin();
         actualizarEstadoSesion();
-        cargarPedidosDesdeStorage(); // <-- Aquí
+        cargarPedidosDesdeStorage();
     } else {
         alert('Correo o contraseña incorrectos.');
     }
@@ -143,6 +143,9 @@ function manejarLogin(event) {
 function actualizarEstadoSesion() {
     const cuentaTexto = cuentaBoton?.querySelector('span');
     const usuarioActual = JSON.parse(localStorage.getItem('usuarioActual'));
+
+    const seccionMisPedidos = document.getElementById('mis-pedidos');
+    const linkMisPedidos = document.getElementById('link-mis-pedidos');
 
     if (usuarioActual && cuentaTexto) {
         cuentaTexto.textContent = 'Cerrar sesión';
@@ -156,12 +159,22 @@ function actualizarEstadoSesion() {
                     abrirModalLogin();
                 };
                 pedidosRealizados = [];
-                document.getElementById('mis-pedidos')?.classList.add('hidden');
+
+                // Ocultar secciones y enlaces al cerrar sesión
+                seccionMisPedidos?.classList.add('hidden');
                 document.getElementById('productos')?.classList.remove('hidden');
+                linkMisPedidos?.classList.add('hidden');
             }
         };
+
+        // Mostrar enlace y sección si hay sesión activa
+        linkMisPedidos?.classList.remove('hidden');
+    } else {
+        seccionMisPedidos?.classList.add('hidden');
+        linkMisPedidos?.classList.add('hidden');
     }
 }
+
 
 // Función para alternar entre login y registro
 function alternarFormulario(tipo) {
@@ -485,7 +498,7 @@ function disminuirCantidad(id) {
     if (producto) {
         producto.cantidad -= 1;
         if (producto.cantidad <= 0) {
-            carrito = carrito.filter(p => p.id !== id); // eliminar si es 0
+            carrito = carrito.filter(p => p.id !== id);
         }
         guardarCarritoEnStorage();
         renderizarCarrito();
