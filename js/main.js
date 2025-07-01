@@ -5,27 +5,27 @@ let current = 0;
 let interval;
 
 function mostrarMensaje(texto, tipo = 'info', duracion = 2000) {
-  const mensajeDiv = document.getElementById('mensaje-error');
-  if (!mensajeDiv) return;
+    const mensajeDiv = document.getElementById('mensaje-error');
+    if (!mensajeDiv) return;
 
-  mensajeDiv.textContent = texto;
-  mensajeDiv.className = 'text-center py-2 text-sm font-medium';
+    mensajeDiv.textContent = texto;
+    mensajeDiv.className = 'text-center py-2 text-sm font-medium';
 
-  if (tipo === 'error') {
-    mensajeDiv.classList.add('bg-red-100', 'text-red-700', 'border', 'border-red-300');
-  } else if (tipo === 'exito') {
-    mensajeDiv.classList.add('bg-green-100', 'text-green-700', 'border', 'border-green-300');
-  } else {
-    mensajeDiv.classList.add('bg-blue-100', 'text-blue-700', 'border', 'border-blue-300');
-  }
+    if (tipo === 'error') {
+        mensajeDiv.classList.add('bg-red-100', 'text-red-700', 'border', 'border-red-300');
+    } else if (tipo === 'exito') {
+        mensajeDiv.classList.add('bg-green-100', 'text-green-700', 'border', 'border-green-300');
+    } else {
+        mensajeDiv.classList.add('bg-blue-100', 'text-blue-700', 'border', 'border-blue-300');
+    }
 
-  mensajeDiv.classList.remove('hidden');
+    mensajeDiv.classList.remove('hidden');
 
-  if (duracion > 0) {
-    setTimeout(() => {
-      mensajeDiv.classList.add('hidden');
-    }, duracion);
-  }
+    if (duracion > 0) {
+        setTimeout(() => {
+            mensajeDiv.classList.add('hidden');
+        }, duracion);
+    }
 }
 
 // Variables globales para productos y filtros
@@ -453,17 +453,45 @@ function renderizarCarrito() {
         <img src="${prod.image}" alt="${prod.title}" class="w-12 h-12 object-contain">
         <div class="flex-1">
           <h4 class="text-sm font-medium line-clamp-1">${prod.title}</h4>
-          <p class="text-xs text-gray-600">Cant: ${prod.cantidad} | 💲${(prod.price * prod.cantidad).toFixed(2)}</p>
+          <p class="text-xs text-gray-600">
+            <button onclick="disminuirCantidad(${prod.id})" class="text-red-600 hover:text-red-800 font-bold px-2">-</button>
+            ${prod.cantidad}
+            <button onclick="aumentarCantidad(${prod.id})" class="text-green-600 hover:text-green-800 font-bold px-2">+</button>
+            | 💲${(prod.price * prod.cantidad).toFixed(2)}
+          </p>
         </div>
         <button class="text-red-600 hover:text-red-800 font-bold" onclick="eliminarDelCarrito(${prod.id})">×</button>
-      `;
+    `;
 
         contenedor.appendChild(div);
     });
 
+
     totalTexto.textContent = `USD ${calcularTotal()}`;
     actualizarContadorCarrito();
 }
+
+function aumentarCantidad(id) {
+    const producto = carrito.find(p => p.id === id);
+    if (producto) {
+        producto.cantidad += 1;
+        guardarCarritoEnStorage();
+        renderizarCarrito();
+    }
+}
+
+function disminuirCantidad(id) {
+    const producto = carrito.find(p => p.id === id);
+    if (producto) {
+        producto.cantidad -= 1;
+        if (producto.cantidad <= 0) {
+            carrito = carrito.filter(p => p.id !== id); // eliminar si es 0
+        }
+        guardarCarritoEnStorage();
+        renderizarCarrito();
+    }
+}
+
 
 function eliminarDelCarrito(id) {
     carrito = carrito.filter(prod => prod.id !== id);
@@ -473,36 +501,36 @@ function eliminarDelCarrito(id) {
 
 // Función para filtrar productos por categoría
 function filtrarPorCategoria(categoria) {
-  categoriaActiva = categoria;
+    categoriaActiva = categoria;
 
-  document.getElementById('mis-pedidos')?.classList.add('hidden');
-  document.getElementById('productos')?.classList.remove('hidden');
+    document.getElementById('mis-pedidos')?.classList.add('hidden');
+    document.getElementById('productos')?.classList.remove('hidden');
 
-  // Mostrar mensaje de carga
-  mostrarMensaje('Cargando productos...', 'info', 1500);
+    // Mostrar mensaje de carga
+    mostrarMensaje('Cargando productos...', 'info', 1500);
 
-  const titulo = document.getElementById('titulo-productos');
-  const titulos = {
-    'todos': 'Productos Destacados',
-    'electronics': 'Productos de Electrónica',
-    'jewelery': 'Productos de Joyería',
-    "men's clothing": 'Ropa para Hombre',
-    "women's clothing": 'Ropa para Mujer',
-    'destacados': 'Productos Destacados (4+ Estrellas)'
-  };
+    const titulo = document.getElementById('titulo-productos');
+    const titulos = {
+        'todos': 'Productos Destacados',
+        'electronics': 'Productos de Electrónica',
+        'jewelery': 'Productos de Joyería',
+        "men's clothing": 'Ropa para Hombre',
+        "women's clothing": 'Ropa para Mujer',
+        'destacados': 'Productos Destacados (4+ Estrellas)'
+    };
 
-  if (document.getElementById('input-busqueda')) {
-    document.getElementById('input-busqueda').value = '';
-  }
+    if (document.getElementById('input-busqueda')) {
+        document.getElementById('input-busqueda').value = '';
+    }
 
-  if (titulo) {
-    titulo.textContent = titulos[categoria] || 'Productos Destacados';
-  }
+    if (titulo) {
+        titulo.textContent = titulos[categoria] || 'Productos Destacados';
+    }
 
-  // Simular un retardo de carga antes de mostrar
-  setTimeout(() => {
-    mostrarProductos(todosLosProductos, categoria);
-  }, 500);
+    // Simular un retardo de carga antes de mostrar
+    setTimeout(() => {
+        mostrarProductos(todosLosProductos, categoria);
+    }, 500);
 }
 
 
@@ -981,7 +1009,7 @@ document.addEventListener('DOMContentLoaded', () => {
             mostrarProductos(productosFiltrados, 'todos');
         });
     }
-    
+
     const selectOrden = document.getElementById('ordenar-productos');
 
     if (selectOrden) {
