@@ -7,7 +7,7 @@
   <title>World Wide Shop</title>
   <link rel="stylesheet" href="./css/estilos.css">
   <script src="https://cdn.tailwindcss.com"></script>
-</head>
+  </head>
 
 <body class="bg-gray-300">
 
@@ -20,20 +20,19 @@
         </div>
       </div>
 
-      <div class="flex-1 max-w-2xl flex items-center">
-        <input id="input-busqueda" type="text" placeholder="Buscar productos..."
+      <form class="flex-1 max-w-2xl flex items-center" role="search">
+        <input id="input-busqueda" type="search" placeholder="Buscar productos..."
           class="w-full px-4 py-2 rounded-l-md text-black focus:outline-none" />
-        <button class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-r-md">
+        <button type="submit" class="bg-yellow-400 hover:bg-yellow-500 text-black px-4 py-2 rounded-r-md" aria-label="Buscar">
           <i class="ph ph-magnifying-glass text-lg"></i>
         </button>
-      </div>
+      </form>
 
       <div class="flex items-center gap-6">
         <a href="#" class="flex items-center gap-1 hover:text-yellow-400">
           <i class="ph ph-user-circle text-xl"></i>
           <span class="text-sm hidden sm:inline">Cuenta</span>
         </a>
-
         <a href="#" class="flex items-center gap-1 hover:text-yellow-400 relative">
           <i class="ph ph-shopping-cart text-xl"></i>
           <span class="text-sm hidden sm:inline">Carrito</span>
@@ -46,174 +45,73 @@
       <div class="max-w-7xl mx-auto px-4 py-2 flex flex-wrap items-center gap-4">
         <a href="#" onclick="filtrarPorCategoria('todos')" class="hover:text-yellow-400">Inicio</a>
         <a href="#" onclick="filtrarPorCategoria('electronics')" class="hover:text-yellow-400">Electrónica</a>
-
         <div class="relative group">
           <button class="hover:text-yellow-400 flex items-center gap-1 focus:outline-none">
-            Ropa
-            <i class="ph ph-caret-down"></i>
+            Ropa <i class="ph ph-caret-down"></i>
           </button>
-          <div
-            class="absolute left-0 mt-2 w-40 bg-white text-black rounded-md shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition-all duration-200 invisible group-hover:visible z-50">
-            <a href="#" onclick="filtrarPorCategoria('men\'s clothing')" class="block px-4 py-2 hover:bg-gray-200">Ropa
-              Hombre</a>
-            <a href="#" onclick="filtrarPorCategoria('women\'s clothing')"
-              class="block px-4 py-2 hover:bg-gray-200">Ropa Mujer</a>
+          <div class="absolute left-0 mt-2 w-40 bg-white text-black rounded-md shadow-lg opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-2 transition-all duration-200 invisible group-hover:visible z-50">
+            <a href="#" onclick="filtrarPorCategoria('men\'s clothing')" class="block px-4 py-2 hover:bg-gray-200">Ropa Hombre</a>
+            <a href="#" onclick="filtrarPorCategoria('women\'s clothing')" class="block px-4 py-2 hover:bg-gray-200">Ropa Mujer</a>
           </div>
         </div>
-
         <a href="#" onclick="filtrarPorCategoria('jewelery')" class="hover:text-yellow-400">Joyería</a>
         <a href="#" onclick="mostrarProductosDestacados()" class="hover:text-yellow-400">Destacados</a>
         <span id="link-mis-pedidos" class="hidden">
           <a href="#" onclick="mostrarMisPedidos()" class="hover:text-yellow-400">Mis Pedidos</a>
         </span>
-
       </div>
     </nav>
   </header>
 
-  <div id="modal-login" class="fixed inset-0 z-50 hidden items-center justify-center">
-
+  <div id="modal-login" class="fixed inset-0 z-50 hidden items-center justify-center" role="dialog" aria-modal="true" aria-labelledby="modal-title">
     <div id="overlay-modal" class="absolute inset-0 bg-black bg-opacity-50"></div>
-
     <div class="relative bg-white rounded-lg shadow-2xl w-full max-w-md mx-4 overflow-hidden">
-
       <div class="flex items-center justify-between p-6 border-b">
-        <h2 class="text-xl font-semibold text-gray-800">Bienvenido</h2>
-        <button id="cerrar-modal" class="text-gray-400 hover:text-gray-600 text-2xl leading-none">
+        <h2 id="modal-title" class="text-xl font-semibold text-gray-800">Bienvenido</h2>
+        <button id="cerrar-modal" class="text-gray-400 hover:text-gray-600 text-2xl leading-none" aria-label="Cerrar modal">
           <i class="ph ph-x"></i>
         </button>
       </div>
-
       <div class="flex border-b">
-        <button id="login-tab" onclick="alternarFormulario('login')"
-          class="flex-1 py-3 px-4 text-center font-medium border-b-2 border-red-600 text-red-600">
-          Iniciar Sesión
-        </button>
-        <button id="register-tab" onclick="alternarFormulario('register')"
-          class="flex-1 py-3 px-4 text-center font-medium text-gray-600 hover:text-gray-800">
-          Registrarse
-        </button>
+        <button id="login-tab" onclick="alternarFormulario('login')" class="flex-1 py-3 px-4 text-center font-medium border-b-2 border-red-600 text-red-600">Iniciar Sesión</button>
+        <button id="register-tab" onclick="alternarFormulario('register')" class="flex-1 py-3 px-4 text-center font-medium text-gray-600 hover:text-gray-800">Registrarse</button>
       </div>
-
       <div id="login-form" class="p-6">
         <form onsubmit="manejarLogin(event)">
           <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Correo Electrónico
-            </label>
-            <input id="email-login" type="email" required
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-              placeholder="ejemplo@correo.com">
+            <label for="email-login" class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico</label>
+            <input id="email-login" type="email" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="ejemplo@correo.com">
           </div>
-
           <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Contraseña
-            </label>
-            <input id="password-login" type="password" required
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-              placeholder="••••••••">
+            <label for="password-login" class="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
+            <input id="password-login" type="password" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="••••••••">
           </div>
-
           <div class="flex items-center justify-between mb-6">
-            <label class="flex items-center">
-              <input type="checkbox" class="rounded border-gray-300 text-red-600 focus:ring-red-500">
-              <span class="ml-2 text-sm text-gray-600">Recordarme</span>
-            </label>
+            <label class="flex items-center"><input type="checkbox" class="rounded border-gray-300 text-red-600 focus:ring-red-500"><span class="ml-2 text-sm text-gray-600">Recordarme</span></label>
             <a href="#" class="text-sm text-red-600 hover:text-red-700">¿Olvidaste tu contraseña?</a>
           </div>
-
-          <button type="submit"
-            class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition duration-200">
-            Iniciar Sesión
-          </button>
-
-          <div class="mt-6 text-center">
-            <p class="text-sm text-gray-600 mb-4">O continúa con</p>
-            <div class="space-y-2">
-              <button type="button"
-                class="w-full flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-200">
-                <i class="ph ph-facebook-logo text-lg"></i>
-                Facebook
-              </button>
-              <button type="button"
-                class="w-full flex items-center justify-center gap-3 bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-md border transition duration-200">
-                <i class="ph ph-google-logo text-lg"></i>
-                Google
-              </button>
-            </div>
-          </div>
+          <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition duration-200">Iniciar Sesión</button>
         </form>
       </div>
-
       <div id="register-form" class="p-6 hidden">
         <form onsubmit="manejarRegistro(event)">
           <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Nombre Completo
-            </label>
-            <input id="nombre-registro" type="text" required
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-              placeholder="Tu nombre completo">
+            <label for="nombre-registro" class="block text-sm font-medium text-gray-700 mb-2">Nombre Completo</label>
+            <input id="nombre-registro" type="text" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="Tu nombre completo">
           </div>
-
           <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Correo Electrónico
-            </label>
-            <input id="email-registro" type="email" required
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-              placeholder="ejemplo@correo.com">
+            <label for="email-registro" class="block text-sm font-medium text-gray-700 mb-2">Correo Electrónico</label>
+            <input id="email-registro" type="email" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="ejemplo@correo.com">
           </div>
-
           <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Contraseña
-            </label>
-            <input id="password-registro" type="password" required
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-              placeholder="••••••••">
+            <label for="password-registro" class="block text-sm font-medium text-gray-700 mb-2">Contraseña</label>
+            <input id="password-registro" type="password" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="••••••••">
           </div>
-
           <div class="mb-4">
-            <label class="block text-sm font-medium text-gray-700 mb-2">
-              Confirmar Contraseña
-            </label>
-            <input id="confirmar-password" type="password" required
-              class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent"
-              placeholder="••••••••">
+            <label for="confirmar-password" class="block text-sm font-medium text-gray-700 mb-2">Confirmar Contraseña</label>
+            <input id="confirmar-password" type="password" required class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent" placeholder="••••••••">
           </div>
-
-          <div class="mb-6">
-            <label class="flex items-start">
-              <input type="checkbox" required class="mt-1 rounded border-gray-300 text-red-600 focus:ring-red-500">
-              <span class="ml-2 text-sm text-gray-600">
-                Acepto los <a href="#" class="text-red-600 hover:text-red-700">términos y condiciones</a>
-                y la <a href="#" class="text-red-600 hover:text-red-700">política de privacidad</a>
-              </span>
-            </label>
-          </div>
-
-          <button type="submit"
-            class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition duration-200">
-            Crear Cuenta
-          </button>
-
-          <div class="mt-6 text-center">
-            <p class="text-sm text-gray-600 mb-4">O regístrate con</p>
-            <div class="space-y-2">
-              <button type="button"
-                class="w-full flex items-center justify-center gap-3 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md transition duration-200">
-                <i class="ph ph-facebook-logo text-lg"></i>
-                Facebook
-              </button>
-              <button type="button"
-                class="w-full flex items-center justify-center gap-3 bg-gray-100 hover:bg-gray-200 text-gray-800 py-2 px-4 rounded-md border transition duration-200">
-                <i class="ph ph-google-logo text-lg"></i>
-                Google
-              </button>
-            </div>
-          </div>
+          <button type="submit" class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition duration-200">Crear Cuenta</button>
         </form>
       </div>
     </div>
@@ -221,184 +119,120 @@
 
   <div id="mensaje-error" class="text-center py-2 text-sm font-medium hidden"></div>
 
-  <section class="relative w-full max-w-7xl mx-auto mt-4 overflow-hidden rounded-lg shadow-md">
-
-    <div id="carousel" class="relative w-full h-64 sm:h-80 md:h-96">
-      <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-100">
-        <img src="./img/banner2.svg" class="w-full h-full" alt="Banner 1">
+  <main class="max-w-7xl mx-auto px-4 py-8">
+    <section id="carousel-section" class="relative w-full overflow-hidden rounded-lg shadow-md mb-8" aria-label="Carrusel de promociones">
+      <div id="carousel" class="relative w-full aspect-[4/3] md:aspect-[7/3]">
+        <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-100"><img src="./img/banner2.svg" class="w-full h-full" alt="Banner 1"></div>
+        <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-0"><img src="./img/banner3.webp" class="w-full h-full" alt="Banner 2"></div>
+        <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-0"><img src="./img/banner1.png" class="w-full h-full" alt="Banner 3"></div>
+        <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-0"><img src="./img/banner4.webp" class="w-full h-full" alt="Banner 4"></div>
       </div>
-      <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-0">
-        <img src="./img/banner3.webp" class="w-full h-full" alt="Banner 2">
+      <button id="prevBtn" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80"><i class="ph ph-caret-left text-2xl"></i></button>
+      <button id="nextBtn" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80"><i class="ph ph-caret-right text-2xl"></i></button>
+    </section>
+
+    <section id="productos" aria-labelledby="titulo-productos">
+      <div class="flex flex-wrap justify-between items-center mb-6 gap-4">
+        <h2 id="titulo-productos" class="text-2xl font-bold">Nuestros Productos</h2>
+        <div class="flex items-center">
+          <label for="ordenar-productos" class="mr-2 text-sm font-medium">Ordenar por:</label>
+          <select id="ordenar-productos" class="px-2 py-1 border border-gray-300 rounded-md text-sm">
+            <option value="default">Por defecto</option>
+            <option value="precio-asc">Precio: Menor a Mayor</option>
+            <option value="precio-desc">Precio: Mayor a Menor</option>
+            <option value="nombre-asc">Nombre: A-Z</option>
+            <option value="nombre-desc">Nombre: Z-A</option>
+          </select>
+        </div>
       </div>
-      <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-0">
-        <img src="./img/banner1.png" class="w-full h-full" alt="Banner 3">
-      </div>
-      <div class="carousel-item absolute inset-0 transition-opacity duration-1000 opacity-0">
-        <img src="./img/banner4.webp" class="w-full h-full" alt="Banner 4">
-      </div>
-    </div>
+      <div id="lista-productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        </div>
+    </section>
 
-    <button id="prevBtn"
-      class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80">
-      <i class="ph ph-caret-left text-2xl"></i>
-    </button>
-    <button id="nextBtn"
-      class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black bg-opacity-50 text-white p-2 rounded-full hover:bg-opacity-80">
-      <i class="ph ph-caret-right text-2xl"></i>
-    </button>
-  </section>
+    <section id="mis-pedidos" class="hidden" aria-labelledby="titulo-mis-pedidos">
+      <h2 id="titulo-mis-pedidos" class="text-2xl font-bold mb-4">Mis Pedidos</h2>
+      <div id="lista-pedidos" class="space-y-4">
+        </div>
+    </section>
+  </main>
 
-  <section id="productos" class="max-w-7xl mx-auto px-4 py-8">
-
-    <div class="flex justify-between items-center mb-6">
-      <h2 id="titulo-productos" class="text-2xl font-bold">Nuestros Productos</h2>
-    </div>
-
-    <div class="flex items-center justify-end mb-4">
-      <label for="ordenar-productos" class="mr-2 text-sm font-medium">Ordenar por:</label>
-      <select id="ordenar-productos" class="px-2 py-1 border border-gray-300 rounded-md text-sm">
-        <option value="default">Por defecto</option>
-        <option value="precio-asc">Precio: Menor a Mayor</option>
-        <option value="precio-desc">Precio: Mayor a Menor</option>
-        <option value="nombre-asc">Nombre: A-Z</option>
-        <option value="nombre-desc">Nombre: Z-A</option>
-      </select>
-    </div>
-
-    <div id="lista-productos" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-    </div>
-  </section>
-
-  <section id="mis-pedidos" class="max-w-7xl mx-auto px-4 py-8 hidden">
-    <h2 class="text-2xl font-bold mb-4">Mis Pedidos</h2>
-    <div id="lista-pedidos" class="space-y-4">
-    </div>
-  </section>
-
-  <aside id="carrito"
-    class="fixed right-0 top-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50 flex flex-col">
-
+  <aside id="carrito" class="fixed right-0 top-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50 flex flex-col">
     <div class="flex items-center justify-between p-4 border-b">
       <h2 class="text-lg font-semibold">🛒 Mi Carrito</h2>
-      <button id="cerrarCarrito" class="text-gray-500 hover:text-red-600 text-2xl leading-none">&times;</button>
+      <button id="cerrarCarrito" class="text-gray-500 hover:text-red-600 text-2xl leading-none" aria-label="Cerrar carrito">&times;</button>
     </div>
-
     <div id="items-carrito" class="flex-1 overflow-y-auto p-4 space-y-4">
-    </div>
-
+      </div>
     <div class="border-t p-4">
       <p class="text-lg font-bold mb-2">Total: <span id="total-carrito">USD 0.00</span></p>
-      <button class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-md font-semibold">
-        Finalizar Compra
-      </button>
+      <button class="w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-md font-semibold">Finalizar Compra</button>
     </div>
   </aside>
 
   <footer class="bg-black text-white">
     <div class="max-w-7xl mx-auto px-4 py-12">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-
-        <div class="text-center md:text-left">
-          <h3 class="text-lg font-semibold mb-4 text-white">Sobre Nosotros</h3>
-          <div class="space-y-2 text-gray-300">
+        <section class="text-center md:text-left" aria-labelledby="footer-about-title">
+          <h3 id="footer-about-title" class="text-lg font-semibold mb-4 text-white">Sobre Nosotros</h3>
+          <address class="space-y-2 text-gray-300 not-italic">
             <p class="font-medium">World Wide Shop S.A.</p>
             <p class="text-sm">NIT: 890.900.943-1</p>
             <div class="mt-4 space-y-2 text-sm">
-              <p class="flex items-center justify-center md:justify-start gap-2">
-                <i class="ph ph-map-pin text-base"></i>
-                <span>Bucaramanga, Santander, Colombia</span>
-              </p>
-              <p class="flex items-center justify-center md:justify-start gap-2">
-                <i class="ph ph-clock text-base"></i>
-                <span>Lun - Vie: 8:00 AM - 6:00 PM</span>
-              </p>
-              <p class="flex items-center justify-center md:justify-start gap-2">
-                <i class="ph ph-storefront text-base"></i>
-                <span>Tienda en línea 24/7</span>
-              </p>
+              <p class="flex items-center justify-center md:justify-start gap-2"><i class="ph ph-map-pin text-base"></i><span>Bucaramanga, Santander, Colombia</span></p>
+              <p class="flex items-center justify-center md:justify-start gap-2"><i class="ph ph-clock text-base"></i><span>Lun - Vie: 8:00 AM - 6:00 PM</span></p>
+              <p class="flex items-center justify-center md:justify-start gap-2"><i class="ph ph-storefront text-base"></i><span>Tienda en línea 24/7</span></p>
             </div>
-          </div>
-        </div>
+          </address>
+        </section>
 
-        <div class="text-center">
-          <h3 class="text-lg font-semibold mb-4 text-white">Email</h3>
-          <div class="space-y-3 text-gray-300">
+        <section class="text-center" aria-labelledby="footer-email-title">
+          <h3 id="footer-email-title" class="text-lg font-semibold mb-4 text-white">Email</h3>
+          <address class="space-y-3 text-gray-300 not-italic">
             <div class="p-3 rounded-lg">
               <p class="text-sm text-gray-400 mb-1">Soporte y sugerencias:</p>
-              <a href="mailto:sugerencias@worldwideshop.com"
-                class="text-yellow-400 hover:text-yellow-300 font-medium transition-colors">
-                sugerencias@worldwideshop.com
-              </a>
+              <a href="mailto:sugerencias@worldwideshop.com" class="text-yellow-400 hover:text-yellow-300 font-medium transition-colors">sugerencias@worldwideshop.com</a>
             </div>
             <div class="p-3 rounded-lg">
               <p class="text-sm text-gray-400 mb-1">Servicio al cliente:</p>
-              <a href="mailto:servicio@worldwideshop.com"
-                class="text-yellow-400 hover:text-yellow-300 font-medium transition-colors">
-                servicio@worldwideshop.com
-              </a>
+              <a href="mailto:servicio@worldwideshop.com" class="text-yellow-400 hover:text-yellow-300 font-medium transition-colors">servicio@worldwideshop.com</a>
             </div>
-          </div>
-        </div>
+          </address>
+        </section>
 
-        <div class="text-center md:text-right">
-          <h3 class="text-lg font-semibold mb-4 text-white">Venta telefónica</h3>
-          <div class="space-y-3 text-gray-300">
+        <section class="text-center md:text-right" aria-labelledby="footer-phone-title">
+          <h3 id="footer-phone-title" class="text-lg font-semibold mb-4 text-white">Venta telefónica</h3>
+          <address class="space-y-3 text-gray-300 not-italic">
             <div class="p-3 rounded-lg">
               <p class="text-sm text-gray-400 mb-2">Ventas:</p>
               <div class="space-y-1">
-                <a href="tel:+576017468001"
-                  class="block text-yellow-400 hover:text-yellow-300 font-semibold transition-colors">
-                  (601) 746 8001
-                </a>
-                <a href="tel:+576013649734"
-                  class="block text-yellow-400 hover:text-yellow-300 font-semibold transition-colors">
-                  (601) 364 9734
-                </a>
+                <a href="tel:+576017468001" class="block text-yellow-400 hover:text-yellow-300 font-semibold transition-colors">(601) 746 8001</a>
+                <a href="tel:+576013649734" class="block text-yellow-400 hover:text-yellow-300 font-semibold transition-colors">(601) 364 9734</a>
               </div>
             </div>
-          </div>
-        </div>
+          </address>
+        </section>
       </div>
 
       <div class="border-t border-gray-700 mt-8 pt-8">
         <div class="flex flex-col md:flex-row justify-between items-center gap-4">
-
           <div class="flex flex-wrap justify-center md:justify-start gap-4 text-sm text-gray-400">
             <a href="#" class="hover:text-yellow-400 transition-colors">Términos y Condiciones</a>
             <span class="text-gray-600">|</span>
             <a href="#" class="hover:text-yellow-400 transition-colors">Política de Privacidad</a>
-            <span class="text-gray-600">|</span>
-            <a href="#" class="hover:text-yellow-400 transition-colors">Política de Devoluciones</a>
-            <span class="text-gray-600">|</span>
-            <a href="#" class="hover:text-yellow-400 transition-colors">Preguntas Frecuentes</a>
           </div>
-
           <div class="flex items-center gap-4">
             <span class="text-sm text-gray-400">Síguenos:</span>
             <div class="flex gap-3">
-              <a href="#" class="bg-blue-600 hover:bg-blue-700 p-2 rounded-full transition-colors">
-                <i class="ph ph-facebook-logo text-white text-lg"></i>
-              </a>
-              <a href="#" class="bg-blue-400 hover:bg-blue-500 p-2 rounded-full transition-colors">
-                <i class="ph ph-twitter-logo text-white text-lg"></i>
-              </a>
-              <a href="#" class="bg-pink-600 hover:bg-pink-700 p-2 rounded-full transition-colors">
-                <i class="ph ph-instagram-logo text-white text-lg"></i>
-              </a>
-              <a href="#" class="bg-green-500 hover:bg-green-600 p-2 rounded-full transition-colors">
-                <i class="ph ph-whatsapp-logo text-white text-lg"></i>
-              </a>
+              <a href="#" class="bg-blue-600 hover:bg-blue-700 p-2 rounded-full transition-colors" aria-label="Facebook"><i class="ph ph-facebook-logo text-white text-lg"></i></a>
+              <a href="#" class="bg-blue-400 hover:bg-blue-500 p-2 rounded-full transition-colors" aria-label="Twitter"><i class="ph ph-twitter-logo text-white text-lg"></i></a>
+              <a href="#" class="bg-pink-600 hover:bg-pink-700 p-2 rounded-full transition-colors" aria-label="Instagram"><i class="ph ph-instagram-logo text-white text-lg"></i></a>
+              <a href="#" class="bg-green-500 hover:bg-green-600 p-2 rounded-full transition-colors" aria-label="WhatsApp"><i class="ph ph-whatsapp-logo text-white text-lg"></i></a>
             </div>
           </div>
         </div>
-
         <div class="text-center mt-6 pt-6 border-t border-gray-700">
-          <p class="text-sm text-gray-400">
-            © 2025 World Wide Shop S.A. Todos los derechos reservados.
-          </p>
-          <p class="text-xs text-gray-500 mt-2">
-            Desarrollado por: Bryan Villabona
-          </p>
+          <p class="text-sm text-gray-400">© 2025 World Wide Shop S.A. Todos los derechos reservados.</p>
+          <p class="text-xs text-gray-500 mt-2">Desarrollado por: Bryan Villabona</p>
         </div>
       </div>
     </div>
@@ -407,5 +241,4 @@
   <script src="https://unpkg.com/@phosphor-icons/web"></script>
   <script src="./js/main.js"></script>
 </body>
-
 </html>
