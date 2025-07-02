@@ -58,7 +58,11 @@
         <a href="#" onclick="mostrarProductosDestacados()" class="hover:text-yellow-400">Destacados</a>
         <span id="link-mis-pedidos" class="hidden">
           <a href="#" onclick="mostrarMisPedidos()" class="hover:text-yellow-400">Mis Pedidos</a>
+        </span id="mis-favoritos" class="hidden">
+          <a href="#" onclick="misFavoritos()" class="hover:text-yellow-400">Favoritos</a>
         </span>
+        
+
       </div>
     </nav>
   </header>
@@ -154,6 +158,13 @@
       <div id="lista-pedidos" class="space-y-4">
         </div>
     </section>
+
+    <section id="mis-favoritos" class="hidden">
+      <h2 id="titulo-mis-favoritos" class="text-2xl font-bold mb-4">Mis Favoritos</h2>
+      <div id="fav" class="space-y-4">
+        </div>
+    </section>
+
   </main>
 
   <aside id="carrito" class="fixed right-0 top-0 h-full w-80 bg-white shadow-lg transform translate-x-full transition-transform duration-300 z-50 flex flex-col">

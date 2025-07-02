@@ -1025,6 +1025,54 @@ function activarBotonesCarrito(productos) {
     });
 }
 
+function misFavoritos() {
+    const favoritosSection = document.getElementById('mis-favoritos');
+    const productosSection = document.getElementById('productos');
+
+    if (!favoritosSection || !productosSection) {
+        console.error('No se encontraron los elementos necesarios para mostrar favoritos');
+        return;
+    }
+
+    favoritosSection.classList.remove('hidden');
+    productosSection.classList.add('hidden');       
+
+    const favoritosLista = document.getElementById('lista-favoritos');
+    if (!favoritosLista) {
+        console.error('No se encontró el elemento de la lista de favoritos');
+        return;
+    }
+    favoritosLista.innerHTML = '';
+
+    if (favoritos.length === 0) {   
+        favoritosLista.innerHTML = `
+            <div class="text-center py-8">
+                <i class="ph ph-heart text-6xl text-gray-300 mb-4"></i>
+                <p class="text-gray-500 text-lg">No tienes productos favoritos.</p>
+                <p class="text-gray-400 text-sm mt-2">Agrega productos a tus favoritos para verlos aquí.</p>
+            </div>
+        `;
+        return;
+    }
+
+    favoritos.forEach((producto) => {
+        const productoDiv = document.createElement('div');
+        productoDiv.className = 'bg-white rounded-lg shadow-md p-4 mb-4 flex items-center gap-4';
+
+        productoDiv.innerHTML = `
+            <img src="${producto.image}" alt="${producto.title}" class="w-16 h-16 object-contain rounded border">
+            <div class="flex-1 min-w-0">
+                <h4 class="font-medium text-sm text-gray-800 line-clamp-2 mb-1">${producto.title}</h4>
+                <p class="text-lg font-bold text-gray-800">💲${producto.price.toFixed(2)}</p>
+            </div>
+            <button class="text-red-600 hover:text-red-800 font-bold" onclick="eliminarDelFavoritos(${producto.id})">×</button>
+        `;  
+        favoritosLista.appendChild(productoDiv);
+    });
+
+
+
+}
 
 /**
  * =============================================================
